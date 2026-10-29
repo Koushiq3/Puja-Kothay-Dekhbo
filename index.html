@@ -24,6 +24,14 @@
   --stripe:linear-gradient(var(--sindoor) 0 4px,transparent 4px 6px,#C9A24A 6px 8px);
   color-scheme:light;
 }
+/* Festival calendar: a third look, misty sage with peacock teal */
+:root[data-fest="cal"]{
+  --bg:#EDF3F0; --surface:#FFFFFF; --surface2:#E2ECE8; --line:#CBDAD4;
+  --fg:#17302B; --muted:#5E7770; --accent:#0E7C73; --accent-ink:#FFFFFF;
+  --sindoor:#C2452D; --glow:rgba(14,124,115,.18); --river:#D3E3DD; --focus:#0E7C73;
+  --stripe:linear-gradient(var(--accent) 0 4px,transparent 4px 6px,#8FBFB5 6px 8px);
+  color-scheme:light;
+}
 *{box-sizing:border-box}
 body{
   background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:16px;line-height:1.55;
@@ -60,7 +68,7 @@ button{cursor:pointer}
 @media(min-width:560px){.tabs button{flex-direction:row;gap:10px;padding:10px 12px;font-size:1rem}}
 
 /* countdown */
-.count{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;position:relative;overflow:hidden}
+.count{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;position:relative;overflow:hidden}
 .count::before{content:"";position:absolute;inset:-35% auto auto 20%;width:60%;height:120%;background:radial-gradient(closest-side,var(--glow),transparent);pointer-events:none}
 .count>*{position:relative;min-width:0}
 .big{font-family:var(--font-display);font-size:4.2rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
@@ -72,19 +80,28 @@ button{cursor:pointer}
 .diya .bowl{fill:var(--line)}
 .diya .wick{fill:var(--muted)}
 .diya.lit .bowl{fill:#B5651D}
-.diya.lit .flame{opacity:1;fill:var(--accent);animation:flick 1.6s ease-in-out infinite}
-.diya.lit:nth-child(odd) .flame{animation-delay:-.7s}
+.diya .fg{transform-origin:50% 100%;transform-box:fill-box}
+.diya.lit .flame{fill:var(--accent);animation:seqlit 12s ease-out infinite both;animation-delay:calc(var(--i)*.45s)}
+.diya.lit .fg{animation:flick 1.6s ease-in-out infinite;animation-delay:calc(var(--i)*-.3s)}
+@keyframes seqlit{0%{opacity:0;transform:scale(0)}3%{opacity:1;transform:scale(1.3)}6%,88%{opacity:1;transform:scale(1)}94%,100%{opacity:0;transform:scale(.3)}}
 @keyframes flick{0%,100%{transform:scale(1,1)}35%{transform:scale(.9,1.08)}70%{transform:scale(1.05,.94)}}
 .days{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
-.days span{border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:.88rem;color:var(--muted)}
+.days span{border:1px solid #E5B4AE;background:#FBEDEB;border:1px solid color-mix(in srgb,var(--sindoor) 35%,transparent);background:color-mix(in srgb,var(--sindoor) 9%,transparent);border-radius:999px;padding:2px 14px;font-size:.9rem;font-weight:600;color:var(--sindoor)}
 .cd-label{font-family:var(--font-display);font-size:1.35rem;line-height:1.3}
 .cd-date{color:var(--muted);font-size:.92rem;margin-top:-6px}
-.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;width:100%;max-width:420px}
-.tile{background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:10px 4px;display:flex;flex-direction:column;align-items:center}
-.tile b{font-family:var(--font-display);font-weight:400;font-size:2.1rem;line-height:1.1;color:var(--accent);font-variant-numeric:tabular-nums}
-.tile span{font-size:.78rem;color:var(--muted)}
+.cdx{width:100%;max-width:440px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.cd-days{display:flex;align-items:baseline;justify-content:center;gap:10px}
+.cd-days b{font-family:var(--font-display);font-weight:400;font-size:clamp(4rem,20vw,5.6rem);line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.cd-days span{font-size:1.1rem;font-weight:600}
+.cd-hms{display:flex;align-items:center;justify-content:center;gap:8px}
+.cd-hms div{display:flex;flex-direction:column;align-items:center;min-width:3.4rem}
+.cd-hms b{font-family:var(--font-display);font-weight:400;font-size:1.8rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.cd-hms small{font-size:.74rem;color:var(--muted)}
+.cd-hms i{font-style:normal;font-size:1.6rem;color:var(--muted);align-self:flex-start;line-height:1.1;animation:blinkc 1s steps(2) infinite}
+@keyframes blinkc{50%{opacity:.2}}
+.cd-bar{width:100%;height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.cd-bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:4px;transition:width 1s linear}
 .cd-note{color:var(--muted);font-size:.84rem;max-width:520px}
-@media(max-width:380px){.tile b{font-size:1.7rem}}
 
 /* controls */
 .controls{display:grid;gap:12px;grid-template-columns:1fr}
@@ -157,23 +174,34 @@ button{cursor:pointer}
 .calhead{display:flex;flex-direction:column;gap:6px}
 .calhead h2{margin:0;font-family:var(--font-display);font-weight:400;font-size:1.6rem}
 .calhead .sum{color:var(--muted)}
-.tl{list-style:none;margin:0;padding:0;position:relative;display:flex;flex-direction:column;gap:10px}
+.tl{list-style:none;margin:0;padding:0;position:relative;display:flex;flex-direction:column;gap:0}
 .tl::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;border-left:2px dashed var(--line)}
-.tl li{position:relative;display:flex;align-items:center;gap:12px;margin-left:34px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+
+.tl li{position:relative;display:flex;align-items:center;gap:12px;margin-left:34px;padding:12px 0;border-bottom:1px solid var(--line)}
+.tl li:last-child{border-bottom:0}
 .tl li.empty{display:block;margin-left:34px}
 .tl .dot{position:absolute;left:-31px;top:50%;width:18px;height:18px;margin-top:-9px;border-radius:50%;border:2px solid var(--line);background:var(--bg);display:grid;place-items:center;color:var(--accent-ink)}
 .tl li.done .tb,.tl li.done .fw{opacity:.7}
-.tl li.done .dot{background:var(--accent);border-color:var(--accent)}
-.tl li.done .status{color:var(--accent);border-color:var(--accent)}
+.tl li.done .dot{background:#9BA8A3;border-color:#9BA8A3;color:#fff}
+.tl li.done .status{color:var(--muted);border-color:var(--line)}
 .tl .tb{flex:1;min-width:0}
 .tl .fw{width:40px;height:40px;flex:none}
 .tl .fi{width:40px;height:40px}
-.upnext{display:flex;align-items:center;gap:16px;background:var(--surface);border:1px solid var(--accent);border-radius:16px;padding:16px 18px;box-shadow:0 8px 28px var(--glow)}
-.upnext .fi{width:64px;height:64px;flex:none}
-.un-k{font-size:.78rem;font-weight:700;letter-spacing:.06em;color:var(--accent)}
-.un-name{font-family:var(--font-display);font-size:1.4rem;line-height:1.25}
-.un-meta{color:var(--muted);font-size:.92rem}
-.fi{display:block}
+.upnext{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:6px 0 20px}
+.un-k{display:flex;align-items:center;gap:12px;width:100%;max-width:340px;font-size:.82rem;font-weight:700;letter-spacing:.16em;color:var(--accent)}
+.un-k::before,.un-k::after{content:"";flex:1;height:1px;background:var(--line)}
+.un-stage{position:relative;width:124px;height:124px;display:grid;place-items:center;margin:4px 0}
+.un-stage::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(closest-side,var(--glow),transparent);animation:halo 3s ease-in-out infinite}
+.un-stage .fi{position:relative;width:92px;height:92px;overflow:visible;animation:floaty 3.4s ease-in-out infinite}
+.un-stage .sp{position:absolute;left:50%;bottom:34%;width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:0;animation:spark 3s ease-out infinite}
+@keyframes spark{0%{opacity:0;transform:translate(0,0) scale(.5)}20%{opacity:.9}100%{opacity:0;transform:translate(var(--x),-64px) scale(1)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.un-name{font-family:var(--font-display);font-size:1.9rem;line-height:1.25}
+.un-date{color:var(--muted);font-size:1rem}
+.un-pill{margin-top:4px;background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:4px 18px;font-weight:700;font-size:.95rem}
+.fi{display:block;--ic:#E5951A;--icg:rgba(229,149,26,.3)}
+.fi .eye{transform-box:fill-box;transform-origin:center;animation:blink 4s infinite}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
 .fi .halo{transform-box:fill-box;transform-origin:center;animation:halo 2.6s ease-in-out infinite}
 @keyframes halo{0%,100%{opacity:.25;transform:scale(.9)}50%{opacity:.75;transform:scale(1.08)}}
 .fi .sway{transform-origin:20px 30px;animation:sway 3s ease-in-out infinite}
@@ -185,7 +213,20 @@ button{cursor:pointer}
 @keyframes lotus{0%,100%{transform:scale(.94)}50%{transform:scale(1.04)}}
 .fi .splat{opacity:0;transform-box:fill-box;transform-origin:center;animation:splat 2.4s ease-out infinite}
 .fi .splat.s2{animation-delay:.4s}.fi .splat.s3{animation-delay:.8s}.fi .splat.s4{animation-delay:1.2s}.fi .splat.s5{animation-delay:1.6s}
-@keyframes splat{0%{opacity:0;transform:scale(.1)}30%{opacity:.95;transform:scale(1)}100%{opacity:0;transform:scale(1.25)}}
+@keyframes splat{0%{opacity:0;transform:scale(.1)}28%{opacity:.95;transform:scale(1.15)}100%{opacity:0;transform:scale(1.7)}}
+.fi-holi{overflow:visible}
+.fi .drop{opacity:0;transform-box:fill-box;transform-origin:center;animation:fly 2.4s ease-out infinite}
+@keyframes fly{0%{opacity:0;transform:translate(0,0) scale(.3)}18%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1)}}
+.fi .fg{transform-box:fill-box;transform-origin:50% 100%;animation:flick 1.2s ease-in-out infinite}
+.fi .cflame{transform-box:fill-box;transform-origin:50% 100%;animation:cflame 5.5s ease-in-out infinite both}
+@keyframes cflame{0%{opacity:0;transform:scale(0)}12%{opacity:1;transform:scale(1.3)}18%{transform:scale(1)}62%{opacity:1;transform:scale(1)}70%{opacity:.7;transform:scale(.55,.7)}75%{opacity:1;transform:scale(.8)}80%,100%{opacity:0;transform:scale(0)}}
+.fi .cglow{opacity:0;animation:cglow 5.5s ease-in-out infinite}
+@keyframes cglow{0%{opacity:0}15%,62%{opacity:1}80%,100%{opacity:0}}
+.fi .csmoke{opacity:0;animation:csmoke 5.5s ease-out infinite}
+@keyframes csmoke{0%,76%{opacity:0;transform:translateY(0)}82%{opacity:.8}100%{opacity:0;transform:translateY(-6px)}}
+.emb{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.emb iframe{display:block;width:100%;height:220px;border:0}
+.foot span+span{text-align:right}
 .fi .wheel{transform-box:fill-box;transform-origin:center;animation:spin 2.4s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .fi .bob{animation:bob 1.2s ease-in-out infinite}
@@ -204,7 +245,7 @@ button{cursor:pointer}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
 .fi .flame{transform-box:fill-box;transform-origin:50% 100%;animation:flick 1.6s ease-in-out infinite}
 .tl li.live .dot,.tl li.next .dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 5px var(--glow)}
-.tl li.next,.tl li.live{border-color:var(--accent);box-shadow:0 6px 22px var(--glow)}
+.tl li.next .tl-name,.tl li.live .tl-name{color:var(--accent)}
 .tl-name{font-family:var(--font-display);font-size:1.15rem;line-height:1.3}
 .tl-date{color:var(--muted);font-size:.88rem}
 .status{white-space:nowrap;font-size:.84rem;font-weight:700;border-radius:999px;padding:2px 12px;border:1px solid var(--line);color:var(--muted)}
@@ -252,6 +293,7 @@ button{cursor:pointer}
   .splash .sflame{transform:scale(1)}
   .splash .glow{transform:scale(1);opacity:1}
   .splash h1,.splash p{opacity:1}
+  .diya.lit .flame{opacity:1!important;transform:none!important}
 }
 [hidden]{display:none!important}
 html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -326,13 +368,12 @@ body{margin:0}
   </div>
 
   <section id="calArea" class="stack" hidden>
-    <div class="calhead"><h2 id="calTitle"></h2><div class="sum" id="calSum"></div></div>
+    <div class="calhead"><h2 id="calTitle"></h2></div>
     <div id="upnext"></div>
     <ol class="tl" id="tl"></ol>
-    <div class="calnote" id="calNote"></div>
   </section>
 
-  <footer class="foot"><span id="demoNote"></span></footer>
+  <footer class="foot"><span id="demoNote"></span><span id="geoNote"></span></footer>
 </div>
 
 <button class="fab" id="fab" type="button"></button>
@@ -396,6 +437,8 @@ var AREAS=[
  {k:'malibagh',bn:'মালিবাগ',en:'Malibagh',lat:23.7490,lng:90.4160}
 ];
 var AREA={};AREAS.forEach(function(a){AREA[a.k]=a});
+var TEMPLE_ONLY=['ramna','siddheshwari','sabujbagh','dhakeshwari','ramakrishna','postogola'];
+function TO(k){return TEMPLE_ONLY.indexOf(k)>-1}
 var SEED_AREAS=['shakhari','tanti','banglabazar','lakshmi','sutrapur','wari','purandhaka'];
 
 /* t: mandir | mahashmashan (Kali temples) ; sangha | para (Kali mandaps, added by people) ; sarbojanin (Durga) */
@@ -458,19 +501,19 @@ var CAL=[
 ];
 
 var S={
- bn:{name:'পূজা কোথায় দেখব',tag:'ঢাকার পূজা, আপনার কাছেই',kali:'কালী পূজা',durga:'দুর্গাপূজা',cal:'উৎসব ক্যালেন্ডার',
+ bn:{name:'পূজা কোথায় দেখব',dev:'Developed by Koushiq Das',geo:'কিছু স্থানের অবস্থান উইকিপিডিয়ার কোঅর্ডিনেট থেকে নেওয়া, বাকিগুলো আনুমানিক।',d27r:'৪ থেকে ৯ অক্টোবর ২০২৭',tag:'ঢাকার পূজা, আপনার কাছেই',kali:'কালী পূজা',durga:'দুর্গাপূজা',cal:'উৎসব ক্যালেন্ডার',
   search:'পূজা খুঁজুন',searchPh:'মন্দির বা এলাকার নাম লিখুন',where:'আপনি এখন কোথায়?',wherePh:'এলাকার নাম, যেমন শাহিনবাগ',
   live:'লাইভ লোকেশন',liveFail:'এই ডেমোতে লাইভ লোকেশন চালু নেই। এলাকার নাম লিখে দিন।',
   youAre:'আপনার অবস্থান',exHint:'উদাহরণ হিসেবে বসানো, আপনার এলাকা লিখে বদলান।',unknownArea:'এই নামের এলাকা তালিকায় নেই।',
   daysLeft:'দিন বাকি',uD:'দিন',uH:'ঘণ্টা',uM:'মিনিট',uS:'সেকেন্ড',diyaNote:'প্রতিদিন একটা করে প্রদীপ জ্বলছে',d27end:'দুর্গাপূজা ২০২৭ শুরু হয়ে গেছে',upLabel:'আসন্ন উৎসব',yearEnd:'২০২৬ এর সব উৎসব শেষ। ২০২৭ এর উৎসব শীঘ্রই যোগ হবে।',kaliToday:'আজ কালী পূজা',kaliOver:'এ বছরের কালী পূজা শেষ',kaliDate:'৮ নভেম্বর ২০২৬, রবিবার',
-  d27:'আগামী দুর্গাপূজা ২০২৭ · মহানবমী পর্যন্ত',d27a:'মহানবমী',d27b:'বিজয়া দশমী',d27exp:'প্রত্যাশিত',
+  d27:'দুর্গাপূজা ২০২৭',d27a:'মহানবমী',d27b:'বিজয়া দশমী',d27exp:'প্রত্যাশিত',
   d27note:'পাঁচ দিনের পূজা বিজয়া দশমীতে শেষ হয়। চূড়ান্ত তারিখ সরকারি ছুটির ঘোষণার পর ঠিক হবে। ষষ্ঠী প্রায় ৪–৫ অক্টোবর, তারিখটা আমাদের হিসাব, নিশ্চিত নয়।',
   d27now:'২০২৬ এর দুর্গাপূজা শেষ হয়েছে (বিজয়া দশমী ২১ অক্টোবর)।',
   dd:['ষষ্ঠী','সপ্তমী','অষ্টমী','নবমী','দশমী'],
   list:'তালিকা',map:'ম্যাপ',count:function(n){return n+'টি পূজা'},near:'কাছেরটা আগে',
   none:'কিছু পাওয়া যায়নি।',add:'+ পূজা যোগ করুন',addMandap:'+ মণ্ডপ যোগ করুন',km:'কিমি',away:'সোজা দূরত্ব',
   types:{mandir:'মন্দির',mahashmashan:'মহাশ্মশান',sarbojanin:'সার্বজনীন',sangha:'সংঘের পূজা',para:'পাড়ার পূজা'},pending:'কমিউনিটি · অপেক্ষমাণ',
-  addr:'ঠিকানা',locV:'অবস্থান: উইকিপিডিয়ার কোঅর্ডিনেট থেকে নেওয়া',locA:'অবস্থান আনুমানিক, যাচাই বাকি',
+  addr:'ঠিকানা',where2:'কোথায় অবস্থিত',mapFail:'ম্যাপ না দেখা গেলে নিচের লিঙ্কে খুলুন।',locV:'অবস্থান: উইকিপিডিয়ার কোঅর্ডিনেট থেকে নেওয়া',locA:'অবস্থান আনুমানিক, যাচাই বাকি',
   copyLink:'গুগল ম্যাপ লিঙ্ক কপি',copied:'লিঙ্ক কপি হয়েছে',copyFail:'কপি হয়নি। নিচের লিঙ্কটা হাতে কপি করুন।',openMaps:'Google Maps-এ খুলুন',
   mapNote:'পরিকল্পিত ম্যাপ, স্কেল অনুযায়ী নয়। দূরত্ব সোজা লাইনে মাপা।',you:'আপনি',
   demo:'ডেমো ডাটা। মন্দিরের নাম ও ঠিকানা প্রকাশিত সূত্র থেকে নেওয়া, শুধু ঢাকেশ্বরী, রামকৃষ্ণ মিশন ও জগন্নাথ হলের কোঅর্ডিনেট উইকিপিডিয়া থেকে। বাকি অবস্থান আনুমানিক। কালী পূজার মণ্ডপের নাম এখনো কেউ যোগ করেননি।',
@@ -479,27 +522,27 @@ var S={
   nTemple:'মন্দির',nMandap:'মণ্ডপ',secTemple:'মন্দির',secMandap:'মণ্ডপ',
   emptyArea:'এই এলাকার মণ্ডপের নাম এখনো যোগ হয়নি। আপনি জানলে যোগ করুন।',
   emptyMandap:'এখনো কোনো মণ্ডপ যোগ হয়নি। আপনার পাড়া বা সংঘের পূজার নাম প্রথমে যোগ করুন।',
-  calTitle:'২০২৬ সালের হিন্দু উৎসব',fAll:'সব',fDone:'সম্পন্ন',fLeft:'বাকি আছে',
-  done:'সম্পন্ন',liveNow:'এখন চলছে',todayL:'আজ',left:function(d){return d===1?'আগামীকাল':'আর '+n(d)+' দিন'},
+  calTitle:'২০২৬ সালের উৎসবমালা',fAll:'সব',fDone:'সম্পন্ন',fLeft:'বাকি আছে',
+  done:'সম্পন্ন',liveNow:'এখন চলছে',todayL:'আজ',upIn:function(d){return d===1?'আগামীকাল':'আর '+n(d)+' দিন বাকি'},left:function(d){return d===1?'আগামীকাল':'আর '+n(d)+' দিন'},
   sum:function(a,b){return a+'টি সম্পন্ন · '+b+'টি বাকি আছে'},
   calNote:'তারিখ পঞ্জিকা ও সরকারি ঘোষণা অনুযায়ী একদিন এদিক-ওদিক হতে পারে। ২০২৬ শেষ হলে ২০২৭ এর উৎসব যোগ হবে।',
   fTitle:'আপনার পূজা যোগ করুন',fName:'পূজা বা সংঘের নাম',fArea:'এলাকা',fAddr:'ঠিকানা (লেন, রোড, বাড়ি)',fType:'ধরন',
   fLink:'গুগল ম্যাপ লিঙ্ক (ঐচ্ছিক)',fLinkHint:'Google Maps-এ জায়গাটা খুলে Share চেপে লিঙ্ক কপি করুন, তারপর এখানে পেস্ট করুন।',badLink:'লিঙ্কটা https দিয়ে শুরু হতে হবে।',
   fNote:'ডেমোতে এটি শুধু আপনার ব্রাউজারে থাকে। আসল অ্যাপে অ্যাডমিন দেখে অনুমোদন দিলে সবার জন্য প্রকাশ হবে।',
   cancel:'বাতিল',submit:'জমা দিন',added:'জমা হয়েছে। অনুমোদনের অপেক্ষায়।'},
- en:{name:'Puja Kothay Dekhbo',tag:'Dhaka pujas, near you',kali:'Kali Puja',durga:'Durga Puja',cal:'Festival Calendar',
+ en:{name:'Puja Kothay Dekhbo',dev:'Developed by Koushiq Das',geo:'Some positions come from Wikipedia coordinates, the rest are approximate.',d27r:'4 to 9 October 2027',tag:'Dhaka pujas, near you',kali:'Kali Puja',durga:'Durga Puja',cal:'Festival Calendar',
   search:'Find a puja',searchPh:'Type a temple or area name',where:'Where are you now?',wherePh:'Area name, e.g. Shahinbagh',
   live:'Live location',liveFail:'Live location is off in this demo. Type your area instead.',
   youAre:'Your location',exHint:'Placed as an example. Type your own area to change it.',unknownArea:'That area is not in the list.',
   daysLeft:'days to go',uD:'Days',uH:'Hours',uM:'Min',uS:'Sec',diyaNote:'One more diya lights up every day',d27end:'Durga Puja 2027 has begun',upLabel:'Upcoming',yearEnd:'All 2026 festivals are done. The 2027 festivals will be added soon.',kaliToday:'Kali Puja is today',kaliOver:'This year’s Kali Puja is over',kaliDate:'Sunday, 8 November 2026',
-  d27:'Next Durga Puja 2027 · until Maha Navami',d27a:'Maha Navami',d27b:'Bijoya Dashami',d27exp:'expected',
+  d27:'Durga Puja 2027',d27a:'Maha Navami',d27b:'Bijoya Dashami',d27exp:'expected',
   d27note:'The five-day puja ends on Bijoya Dashami. Final dates are set once the government announces the holidays. Shashthi should be around 4–5 October, which is our own estimate and not confirmed.',
   d27now:'Durga Puja 2026 has ended (Bijoya Dashami was 21 October).',
   dd:['Shashthi','Saptami','Ashtami','Navami','Dashami'],
   list:'List',map:'Map',count:function(n){return n+(n===1?' puja':' pujas')},near:'Nearest first',
   none:'Nothing found.',add:'+ Add a puja',addMandap:'+ Add a mandap',km:'km',away:'Straight-line distance',
   types:{mandir:'Temple',mahashmashan:'Mahashmashan',sarbojanin:'Sarbojanin',sangha:'Club puja',para:'Neighbourhood puja'},pending:'Community · pending',
-  addr:'Address',locV:'Position taken from the place’s Wikipedia coordinates',locA:'Approximate position, not yet verified',
+  addr:'Address',where2:'Where it is',mapFail:'If the map does not load, use the link below.',locV:'Position taken from the place’s Wikipedia coordinates',locA:'Approximate position, not yet verified',
   copyLink:'Copy Google Maps link',copied:'Link copied',copyFail:'Copy failed. Copy the link below by hand.',openMaps:'Open in Google Maps',
   mapNote:'Schematic map, not to scale. Distances are measured in a straight line.',you:'You',
   demo:'Demo data. Temple names and addresses come from published sources. Only Dhakeshwari, Ramakrishna Mission and Jagannath Hall use Wikipedia coordinates. All other positions are approximate. Nobody has added Kali Puja mandap names yet.',
@@ -508,8 +551,8 @@ var S={
   nTemple:'temples',nMandap:'mandaps',secTemple:'Temples',secMandap:'Mandaps',
   emptyArea:'No mandap names have been added for this area yet. Add one if you know it.',
   emptyMandap:'No mandaps added yet. Be the first to add your neighbourhood or club puja.',
-  calTitle:'Hindu festivals of 2026',fAll:'All',fDone:'Completed',fLeft:'Upcoming',
-  done:'Completed',liveNow:'Happening now',todayL:'Today',left:function(d){return d===1?'Tomorrow':'In '+d+' days'},
+  calTitle:'Festivals of 2026',fAll:'All',fDone:'Completed',fLeft:'Upcoming',
+  done:'Completed',liveNow:'Happening now',todayL:'Today',upIn:function(d){return d===1?'Tomorrow':d+' days to go'},left:function(d){return d===1?'Tomorrow':'In '+d+' days'},
   sum:function(a,b){return a+' completed · '+b+' upcoming'},
   calNote:'Dates follow published calendars and official announcements and may shift by a day. The 2027 festivals will be added once 2026 ends.',
   fTitle:'Add your puja',fName:'Puja or club name',fArea:'Area',fAddr:'Address (lane, road, house)',fType:'Type',
@@ -593,20 +636,20 @@ function closeSplash(){var el=$('splash');clearTimeout(splashTimer);el.classList
 $('splash').addEventListener('click',closeSplash);
 
 /* ---------- render ---------- */
-function diyaSvg(lit){return '<svg class="diya'+(lit?' lit':'')+'" viewBox="0 0 36 40" aria-hidden="true"><path class="flame" d="M18 3C23 10 24 14.5 18 21C12 14.5 13 10 18 3Z"/><rect class="wick" x="17" y="19" width="2" height="6" rx="1"/><path class="bowl" d="M2 24Q5 36 18 36Q31 36 34 24Q26 28 18 28Q10 28 2 24Z"/></svg>'}
+function diyaSvg(lit,i){return '<svg class="diya'+(lit?' lit':'')+'" style="--i:'+(i||0)+'" viewBox="0 0 36 40" aria-hidden="true"><g class="fg"><path class="flame" d="M18 3C23 10 24 14.5 18 21C12 14.5 13 10 18 3Z"/></g><rect class="wick" x="17" y="19" width="2" height="6" rx="1"/><path class="bowl" d="M2 24Q5 36 18 36Q31 36 34 24Q26 28 18 28Q10 28 2 24Z"/></svg>'}
 /* ---------- festival icons (inline SVG, each with its own small animation) ---------- */
 var FI={
- saraswati:'<g class="sway"><ellipse cx="11" cy="29" rx="7" ry="6" fill="none" stroke="var(--accent)" stroke-width="2.4"/><line x1="16" y1="25" x2="33" y2="9" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><circle cx="34" cy="8" r="2.6" fill="var(--accent)"/><line x1="9" y1="26" x2="28" y2="13" stroke="var(--muted)" stroke-width="1"/></g><circle class="note n1" cx="30" cy="32" r="2" fill="var(--accent)"/><circle class="note n2" cx="22" cy="35" r="1.6" fill="var(--accent)"/>',
- shivaratri:'<circle class="halo" cx="20" cy="22" r="15" fill="var(--glow)"/><path d="M20 5V36" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><path d="M11 10Q11 20 20 20Q29 20 29 10" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><path d="M11 10V6M29 10V6" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/><path d="M20 4l-2.6 4h5.2z" fill="var(--accent)"/><path d="M15 30H25" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>',
- holi:'<circle class="splat" cx="12" cy="14" r="7" fill="#E5457A"/><circle class="splat s2" cx="27" cy="12" r="6" fill="#F4C430"/><circle class="splat s3" cx="29" cy="27" r="7" fill="#3DA5D9"/><circle class="splat s4" cx="12" cy="28" r="6" fill="#4CAF50"/><circle class="splat s5" cx="20" cy="20" r="5" fill="#A855F7"/>',
- rath:'<g class="bob"><rect x="9" y="14" width="22" height="12" rx="2" fill="none" stroke="var(--accent)" stroke-width="2.2"/><path d="M8 14L20 6L32 14" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/><line x1="20" y1="6" x2="20" y2="2" stroke="var(--accent)" stroke-width="2"/><path d="M20 2L27 4L20 6z" fill="var(--sindoor)"/></g><g class="wheel"><circle cx="13" cy="31" r="5" fill="none" stroke="var(--accent)" stroke-width="2"/><line x1="8" y1="31" x2="18" y2="31" stroke="var(--accent)" stroke-width="1.4"/><line x1="13" y1="26" x2="13" y2="36" stroke="var(--accent)" stroke-width="1.4"/></g><g class="wheel"><circle cx="27" cy="31" r="5" fill="none" stroke="var(--accent)" stroke-width="2"/><line x1="22" y1="31" x2="32" y2="31" stroke="var(--accent)" stroke-width="1.4"/><line x1="27" y1="26" x2="27" y2="36" stroke="var(--accent)" stroke-width="1.4"/></g>',
- janmashtami:'<g transform="rotate(-28 20 22)"><rect x="4" y="19.5" width="32" height="5" rx="2.5" fill="#5BA3C9"/><circle cx="13" cy="22" r="1" fill="var(--surface)"/><circle cx="18" cy="22" r="1" fill="var(--surface)"/><circle cx="23" cy="22" r="1" fill="var(--surface)"/></g><path d="M31 37Q37 28 34 20" fill="none" stroke="#2E9E6B" stroke-width="1.6"/><ellipse cx="34" cy="18" rx="3" ry="4" fill="#2E9E6B"/><ellipse cx="34" cy="18" rx="1.4" ry="2" fill="#2A4DB5"/><circle class="note n1" cx="10" cy="12" r="2" fill="var(--accent)"/><circle class="note n2" cx="16" cy="8" r="1.6" fill="var(--accent)"/>',
- mahalaya:'<path d="M7 30A13 13 0 0 1 33 30z" fill="var(--accent)"/><line x1="4" y1="31" x2="36" y2="31" stroke="var(--muted)" stroke-width="2" stroke-linecap="round"/><g stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round"><line class="ray" x1="20" y1="14" x2="20" y2="9"/><line class="ray" style="animation-delay:.3s" x1="31.3" y1="18.7" x2="34.9" y2="15.1"/><line class="ray" style="animation-delay:.3s" x1="8.7" y1="18.7" x2="5.1" y2="15.1"/><line class="ray" style="animation-delay:.6s" x1="33.5" y1="26.4" x2="37.4" y2="25.4"/><line class="ray" style="animation-delay:.6s" x1="6.5" y1="26.4" x2="2.6" y2="25.4"/></g>',
- durga:'<path d="M8 17Q20 12 32 17L30 31Q20 36 10 31z" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/><ellipse cx="20" cy="17" rx="12" ry="3" fill="var(--accent)" opacity=".4"/><path d="M12 19L15 33M20 19V34M28 19L25 33" stroke="var(--accent)" stroke-width="1.2" opacity=".7"/><line class="stick" style="transform-origin:33px 5px" x1="33" y1="5" x2="23" y2="14" stroke="var(--fg)" stroke-width="2" stroke-linecap="round"/><line class="stick s2" style="transform-origin:7px 5px" x1="7" y1="5" x2="17" y2="14" stroke="var(--fg)" stroke-width="2" stroke-linecap="round"/><path class="wave" d="M34.5 19Q37 24 34.5 29" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"/><path class="wave w2" d="M36.5 16Q39.5 24 36.5 32" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round"/>',
- lakshmi:'<circle class="halo" cx="20" cy="22" r="16" fill="var(--glow)"/><g class="lot"><ellipse cx="20" cy="18" rx="5" ry="11" fill="#E97AA0" transform="rotate(-72 20 29)"/><ellipse cx="20" cy="18" rx="5" ry="11" fill="#E97AA0" transform="rotate(72 20 29)"/><ellipse cx="20" cy="18" rx="5" ry="11" fill="#F29BB5" transform="rotate(-38 20 29)"/><ellipse cx="20" cy="18" rx="5" ry="11" fill="#F29BB5" transform="rotate(38 20 29)"/><ellipse cx="20" cy="18" rx="5" ry="11" fill="#F8C2D3"/></g><path d="M7 32Q20 39 33 32" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>',
- kali:'<circle class="halo" cx="20" cy="20" r="14" fill="var(--glow)"/><path class="flame" d="M20 6C25.5 13 26.5 18 20 25C13.5 18 14.5 13 20 6z" fill="var(--accent)"/><rect x="19" y="23" width="2" height="6" rx="1" fill="var(--muted)"/><path d="M4 28Q7.5 39 20 39Q32.5 39 36 28Q28 32 20 32Q12 32 4 28z" fill="#B5651D"/>',
- bhai:'<ellipse cx="20" cy="27" rx="16" ry="7" fill="none" stroke="var(--accent)" stroke-width="2.2"/><ellipse cx="20" cy="27" rx="10" ry="4" fill="none" stroke="var(--accent)" stroke-width="1" opacity=".6"/><path class="flame" d="M20 7C23.4 11 23.8 14 20 18C16.2 14 16.6 11 20 7z" fill="var(--accent)"/><rect x="19.2" y="17" width="1.6" height="4" fill="var(--muted)"/><circle class="pulse" cx="20" cy="26" r="3" fill="var(--sindoor)"/><circle cx="11.5" cy="27" r="1.2" fill="var(--fg)"/><circle cx="28.5" cy="27" r="1.2" fill="var(--fg)"/><circle cx="20" cy="30.6" r="1.2" fill="var(--fg)"/>',
- rash:'<circle class="halo" cx="20" cy="20" r="15" fill="var(--glow)"/><circle cx="20" cy="20" r="8" fill="var(--fg)"/><circle cx="17" cy="18" r="1.6" fill="var(--muted)" opacity=".5"/><circle cx="23" cy="23" r="1.2" fill="var(--muted)" opacity=".5"/><g class="orbit" fill="var(--accent)"><circle cx="35" cy="20" r="1.7"/><circle cx="30.6" cy="30.6" r="1.7"/><circle cx="20" cy="35" r="1.7"/><circle cx="9.4" cy="30.6" r="1.7"/><circle cx="5" cy="20" r="1.7"/><circle cx="9.4" cy="9.4" r="1.7"/><circle cx="20" cy="5" r="1.7"/><circle cx="30.6" cy="9.4" r="1.7"/></g>'
+ saraswati:'<g class="sway"><ellipse cx="11" cy="29" rx="7" ry="6" fill="none" stroke="var(--ic)" stroke-width="2.4"/><line x1="16" y1="25" x2="33" y2="9" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round"/><circle cx="34" cy="8" r="2.6" fill="var(--ic)"/><line x1="9" y1="26" x2="28" y2="13" stroke="var(--muted)" stroke-width="1"/></g><circle class="note n1" cx="30" cy="32" r="2" fill="var(--ic)"/><circle class="note n2" cx="22" cy="35" r="1.6" fill="var(--ic)"/>',
+ shivaratri:'<circle class="halo" cx="20" cy="22" r="15" fill="var(--icg)"/><path d="M20 5V36" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round"/><path d="M11 10Q11 20 20 20Q29 20 29 10" fill="none" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round"/><path d="M11 10V6M29 10V6" stroke="var(--ic)" stroke-width="2.4" stroke-linecap="round"/><path d="M20 4l-2.6 4h5.2z" fill="var(--ic)"/><path d="M15 30H25" stroke="var(--ic)" stroke-width="2" stroke-linecap="round"/>',
+ holi:'<circle class="splat" cx="11" cy="12" r="9" fill="#E5457A"/><circle class="splat s2" cx="29" cy="11" r="8" fill="#F4C430"/><circle class="splat s3" cx="30" cy="29" r="9" fill="#3DA5D9"/><circle class="splat s4" cx="10" cy="29" r="8" fill="#4CAF50"/><circle class="splat s5" cx="20" cy="20" r="7" fill="#A855F7"/><circle class="drop" cx="20" cy="20" r="2" fill="#E5457A" style="--dx:-18px;--dy:-14px;animation-delay:0s"/><circle class="drop" cx="20" cy="20" r="2" fill="#F4C430" style="--dx:16px;--dy:-18px;animation-delay:0.3s"/><circle class="drop" cx="20" cy="20" r="2" fill="#3DA5D9" style="--dx:19px;--dy:10px;animation-delay:0.6s"/><circle class="drop" cx="20" cy="20" r="2" fill="#4CAF50" style="--dx:-16px;--dy:16px;animation-delay:0.9s"/><circle class="drop" cx="20" cy="20" r="2" fill="#A855F7" style="--dx:0px;--dy:-21px;animation-delay:1.2s"/><circle class="drop" cx="20" cy="20" r="2" fill="#F29BB5" style="--dx:21px;--dy:-3px;animation-delay:1.5s"/><circle class="drop" cx="20" cy="20" r="2" fill="#FF8A3D" style="--dx:-21px;--dy:0px;animation-delay:1.8s"/><circle class="drop" cx="20" cy="20" r="2" fill="#2FB59A" style="--dx:3px;--dy:21px;animation-delay:2.1s"/>',
+ rath:'<g class="bob"><rect x="9" y="14" width="22" height="12" rx="2" fill="none" stroke="var(--ic)" stroke-width="2.2"/><path d="M8 14L20 6L32 14" fill="none" stroke="var(--ic)" stroke-width="2.2" stroke-linejoin="round"/><line x1="20" y1="6" x2="20" y2="2" stroke="var(--ic)" stroke-width="2"/><path d="M20 2L27 4L20 6z" fill="var(--sindoor)"/></g><g class="wheel"><circle cx="13" cy="31" r="5" fill="none" stroke="var(--ic)" stroke-width="2"/><line x1="8" y1="31" x2="18" y2="31" stroke="var(--ic)" stroke-width="1.4"/><line x1="13" y1="26" x2="13" y2="36" stroke="var(--ic)" stroke-width="1.4"/></g><g class="wheel"><circle cx="27" cy="31" r="5" fill="none" stroke="var(--ic)" stroke-width="2"/><line x1="22" y1="31" x2="32" y2="31" stroke="var(--ic)" stroke-width="1.4"/><line x1="27" y1="26" x2="27" y2="36" stroke="var(--ic)" stroke-width="1.4"/></g>',
+ janmashtami:'<g class="sway" style="transform-origin:31px 39px"><path d="M31 39Q29 30 31 22" fill="none" stroke="#2E9E6B" stroke-width="1.5" stroke-linecap="round"/><ellipse cx="31" cy="15" rx="6.6" ry="10" fill="#2FB59A"/><path d="M31 6V24M26 9L31 14M36 9L31 14M25 14L31 18M37 14L31 18M26 19L31 21M36 19L31 21" stroke="#1E7F6B" stroke-width=".6" fill="none"/><ellipse cx="31" cy="14" rx="4.4" ry="6" fill="#E5B93C"/><ellipse cx="31" cy="14" rx="2.8" ry="3.9" fill="#2A4DB5"/><ellipse cx="31" cy="14" rx="1.2" ry="1.8" fill="#14214F"/></g><g transform="rotate(-30 14 28)"><rect x="1" y="25.5" width="26" height="5" rx="2.5" fill="#5BA3C9"/><circle cx="8" cy="28" r="1" fill="var(--surface)"/><circle cx="13" cy="28" r="1" fill="var(--surface)"/><circle cx="18" cy="28" r="1" fill="var(--surface)"/></g><circle class="note n1" cx="8" cy="14" r="2" fill="var(--ic)"/><circle class="note n2" cx="14" cy="9" r="1.6" fill="var(--ic)"/>',
+ mahalaya:'<path d="M7 30A13 13 0 0 1 33 30z" fill="var(--ic)"/><line x1="4" y1="31" x2="36" y2="31" stroke="var(--muted)" stroke-width="2" stroke-linecap="round"/><g stroke="var(--ic)" stroke-width="2.2" stroke-linecap="round"><line class="ray" x1="20" y1="14" x2="20" y2="9"/><line class="ray" style="animation-delay:.3s" x1="31.3" y1="18.7" x2="34.9" y2="15.1"/><line class="ray" style="animation-delay:.3s" x1="8.7" y1="18.7" x2="5.1" y2="15.1"/><line class="ray" style="animation-delay:.6s" x1="33.5" y1="26.4" x2="37.4" y2="25.4"/><line class="ray" style="animation-delay:.6s" x1="6.5" y1="26.4" x2="2.6" y2="25.4"/></g>',
+ durga:'<path d="M10 14Q16 3 22 14" fill="none" stroke="var(--ic)" stroke-width="1.8" stroke-linecap="round"/><path d="M16 9Q12 4 15 2Q17 3 16 9Q17 3 20 4Q21 7 16 9z" fill="#F7F1DF" stroke="var(--ic)" stroke-width=".7"/><path d="M5 16Q16 10 27 16V28Q16 34 5 28z" fill="#B8672B" stroke="var(--ic)" stroke-width="1.6" stroke-linejoin="round"/><ellipse cx="5" cy="22" rx="2.4" ry="6" fill="#E8C48A" stroke="var(--ic)" stroke-width="1.2"/><ellipse cx="27" cy="22" rx="2.4" ry="6" fill="#F1D8A8" stroke="var(--ic)" stroke-width="1.2"/><path d="M7.5 17.5L11 27L14.5 17L18 27L21.5 17L25 27" fill="none" stroke="#F1D8A8" stroke-width="1.1" stroke-linejoin="round"/><line class="stick" style="transform-origin:37px 9px" x1="37" y1="9" x2="30" y2="20" stroke="var(--fg)" stroke-width="2" stroke-linecap="round"/><line class="stick s2" style="transform-origin:37px 35px" x1="37" y1="35" x2="30" y2="24" stroke="var(--fg)" stroke-width="2" stroke-linecap="round"/><path class="wave" d="M32 18Q35 22 32 26" fill="none" stroke="var(--ic)" stroke-width="1.6" stroke-linecap="round"/><path class="wave w2" d="M34.5 15Q39 22 34.5 29" fill="none" stroke="var(--ic)" stroke-width="1.6" stroke-linecap="round"/>',
+ lakshmi:'<g transform="translate(-3 1)"><circle class="halo" cx="20" cy="22" r="16" fill="var(--icg)"/><g class="lot"><ellipse cx="20" cy="18" rx="5" ry="11" fill="#E97AA0" transform="rotate(-72 20 29)"/><ellipse cx="20" cy="18" rx="5" ry="11" fill="#E97AA0" transform="rotate(72 20 29)"/><ellipse cx="20" cy="18" rx="5" ry="11" fill="#F29BB5" transform="rotate(-38 20 29)"/><ellipse cx="20" cy="18" rx="5" ry="11" fill="#F29BB5" transform="rotate(38 20 29)"/><ellipse cx="20" cy="18" rx="5" ry="11" fill="#F8C2D3"/></g><path d="M7 32Q20 39 33 32" fill="none" stroke="var(--ic)" stroke-width="2" stroke-linecap="round"/></g><g><ellipse cx="34" cy="30" rx="4.4" ry="5.8" fill="#9A6A43"/><path d="M30.3 25.6L30.8 22.4L33 24.4M37.7 25.6L37.2 22.4L35 24.4" fill="#9A6A43"/><ellipse cx="34" cy="32.2" rx="2.5" ry="3.2" fill="#E8CFA6"/><circle cx="32.2" cy="27.8" r="1.7" fill="#fff"/><circle cx="35.8" cy="27.8" r="1.7" fill="#fff"/><circle class="eye" cx="32.2" cy="27.9" r=".8" fill="#222"/><circle class="eye" cx="35.8" cy="27.9" r=".8" fill="#222"/><path d="M33.4 29.3L34 30.4L34.6 29.3z" fill="var(--ic)"/><path d="M31.6 35.8h1.6M34.8 35.8h1.6" stroke="var(--ic)" stroke-width="1.2" stroke-linecap="round"/></g>',
+ kali:'<circle class="halo" cx="20" cy="20" r="14" fill="var(--icg)"/><path class="flame" d="M20 6C25.5 13 26.5 18 20 25C13.5 18 14.5 13 20 6z" fill="var(--ic)"/><rect x="19" y="23" width="2" height="6" rx="1" fill="var(--muted)"/><path d="M4 28Q7.5 39 20 39Q32.5 39 36 28Q28 32 20 32Q12 32 4 28z" fill="#B5651D"/>',
+ bhai:'<ellipse cx="20" cy="33" rx="15" ry="4.5" fill="none" stroke="var(--ic)" stroke-width="2.2"/><circle cx="11" cy="33" r="1.1" fill="var(--fg)"/><circle cx="29" cy="33" r="1.1" fill="var(--fg)"/><circle cx="20" cy="35.8" r="1.1" fill="var(--sindoor)"/><circle class="cglow" cx="20" cy="11" r="10" fill="var(--icg)"/><rect x="17.5" y="19" width="5" height="13" rx="1" fill="#F4E9C8" stroke="var(--ic)" stroke-width="1.2"/><line x1="20" y1="19" x2="20" y2="16.5" stroke="var(--muted)" stroke-width="1.2" stroke-linecap="round"/><g class="fg"><path class="cflame" d="M20 5C23.2 9 23.6 12.4 20 16.4C16.4 12.4 16.8 9 20 5z" fill="var(--ic)"/></g><path class="csmoke" d="M20 15Q17 11 20 8Q23 5 20 2" fill="none" stroke="var(--muted)" stroke-width="1.4" stroke-linecap="round"/>',
+ rash:'<circle class="halo" cx="20" cy="20" r="15" fill="var(--icg)"/><circle cx="20" cy="20" r="8" fill="#F4E9C8" stroke="var(--ic)" stroke-width="1"/><circle cx="17" cy="18" r="1.6" fill="var(--muted)" opacity=".5"/><circle cx="23" cy="23" r="1.2" fill="var(--muted)" opacity=".5"/><g class="orbit" fill="var(--ic)"><circle cx="35" cy="20" r="1.7"/><circle cx="30.6" cy="30.6" r="1.7"/><circle cx="20" cy="35" r="1.7"/><circle cx="9.4" cy="30.6" r="1.7"/><circle cx="5" cy="20" r="1.7"/><circle cx="9.4" cy="9.4" r="1.7"/><circle cx="20" cy="5" r="1.7"/><circle cx="30.6" cy="9.4" r="1.7"/></g>'
 };
 function festIcon(k){return '<svg class="fi fi-'+k+'" viewBox="0 0 40 40" aria-hidden="true">'+(FI[k]||'')+'</svg>'}
 function tabIcon(f){
@@ -616,12 +659,17 @@ function tabIcon(f){
  return '<svg '+a+'><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 17.5h.01M12 17.5h.01" stroke-width="2.6"/></svg>'}
 
 /* ---------- live countdown (target is local Dhaka midnight, UTC+6) ---------- */
-var TARGETS={kali:Date.parse('2026-11-08T00:00:00+06:00'),durga:Date.parse('2027-10-08T00:00:00+06:00')};
+var TARGETS={kali:Date.parse('2026-11-08T00:00:00+06:00'),durga:Date.parse('2027-10-04T00:00:00+06:00')};
 var TOTAL_DIYAS=13;
 function split(ms){var s=Math.floor(Math.max(0,ms)/1000);return{d:Math.floor(s/86400),h:Math.floor(s%86400/3600),m:Math.floor(s%3600/60),s:s%60}}
 function p2(x){return n(x<10?'0'+x:x)}
 function litCount(ms){if(ms<=0)return TOTAL_DIYAS;return Math.max(0,Math.min(TOTAL_DIYAS,TOTAL_DIYAS-1-split(ms).d))}
-function tilesHTML(p){var t=T();return '<div class="tiles" role="timer" id="cd">'+[['d',n(p.d),t.uD],['h',p2(p.h),t.uH],['m',p2(p.m),t.uM],['s',p2(p.s),t.uS]].map(function(x){return '<div class="tile"><b data-u="'+x[0]+'">'+x[1]+'</b><span>'+x[2]+'</span></div>'}).join('')+'</div>'}
+var WINDOW={kali:30*864e5,durga:365*864e5};
+function pct(ms){return Math.max(0,Math.min(100,100*(1-ms/WINDOW[st.fest])))}
+function cdHTML(p,ms){var t=T();
+ return '<div class="cdx" role="timer" id="cd"><div class="cd-days"><b data-u="d">'+n(p.d)+'</b><span>'+t.daysLeft+'</span></div>'
+ +'<div class="cd-hms"><div><b data-u="h">'+p2(p.h)+'</b><small>'+t.uH+'</small></div><i>:</i><div><b data-u="m">'+p2(p.m)+'</b><small>'+t.uM+'</small></div><i>:</i><div><b data-u="s">'+p2(p.s)+'</b><small>'+t.uS+'</small></div></div>'
+ +'<div class="cd-bar"><i id="cdbar" style="width:'+pct(ms).toFixed(1)+'%"></i></div></div>'}
 function renderCount(){
  var t=T(),c=$('count'),html='';
  if(st.fest==='cal'){c.hidden=true;return}
@@ -630,12 +678,12 @@ function renderCount(){
  st.cdEnded=ended;
  if(st.fest==='kali'){
   st.lit=litCount(ms);var row='';
-  for(var i=0;i<TOTAL_DIYAS;i++)row+=diyaSvg(i<st.lit);
-  if(!ended)html='<div class="cd-label">'+t.kali+'</div><div class="cd-date">'+t.kaliDate+'</div>'+tilesHTML(p)+'<div class="diyas">'+row+'</div><div class="cd-note">'+t.diyaNote+'</div>';
+  for(var i=0;i<TOTAL_DIYAS;i++)row+=diyaSvg(i<st.lit,i);
+  if(!ended)html='<div class="cd-label">'+t.kali+'</div><div class="cd-date">'+t.kaliDate+'</div>'+cdHTML(p,ms)+'<div class="diyas">'+row+'</div>';
   else html='<div class="cd-label">'+(Date.now()<TARGETS.kali+864e5?t.kaliToday:t.kaliOver)+'</div><div class="diyas">'+row+'</div>';
  }else{
   var NAV=[2027,9,8],chips=t.dd.map(function(x){return '<span>'+x+'</span>'}).join('');
-  if(!ended)html='<div class="cd-label">'+t.d27+'</div><div class="cd-date">'+t.d27a+': '+fmt(NAV)+' ('+t.d27exp+')</div>'+tilesHTML(p)+'<div class="days">'+chips+'</div><div class="cd-note">'+t.d27note+'</div><div class="cd-note">'+t.d27now+'</div>';
+  if(!ended)html='<div class="cd-label">'+t.d27+'</div><div class="cd-date">'+t.d27r+'</div>'+cdHTML(p,ms)+'<div class="days">'+chips+'</div>';
   else html='<div class="cd-label">'+t.d27end+'</div>';
  }
  c.innerHTML=html}
@@ -647,12 +695,16 @@ function tick(){
  var p=split(ms),el=$('cd');if(!el)return;
  var vals={d:n(p.d),h:p2(p.h),m:p2(p.m),s:p2(p.s)};
  [].forEach.call(el.querySelectorAll('b[data-u]'),function(b){var v=vals[b.dataset.u];if(b.textContent!==v)b.textContent=v});
+ var bar=$('cdbar');if(bar)bar.style.width=pct(ms).toFixed(1)+'%';
  if(st.fest==='kali'&&litCount(ms)!==st.lit)renderCount()}
 setInterval(tick,1000);
 
 function detailHTML(p){
  var t=T(),a=AREA[p.a],ad=addrOf(p)||p.addr||'',link=mapsLink(p),o='<div class="detail">';
- o+='<div><div class="k">'+t.addr+'</div>'+esc(nameOf(a))+(ad?' · '+esc(ad):'')+'</div>';
+ var tp=kindOf(p)==='temple';
+ o+='<div><div class="k">'+(tp?t.where2:t.addr)+'</div>'+esc(nameOf(a))+(ad?' · '+esc(ad):'')+'</div>';
+ if(tp){var q=a.v?(a.lat+','+a.lng):encodeURIComponent(p.en+' '+(p.ae||'')+' Dhaka');
+  o+='<div class="emb"><iframe loading="lazy" title="'+esc(nameOf(p))+'" referrerpolicy="no-referrer" src="https://maps.google.com/maps?q='+q+'&z=16&output=embed"></iframe></div><div class="hint">'+t.mapFail+'</div>'}
  o+='<div class="hint">'+(a.v&&!p.gm?t.locV:t.locA)+'</div>';
  o+='<div class="acts"><button type="button" class="btn" data-copy="'+esc(p.id)+'">'+t.copyLink+'</button><a href="'+esc(link)+'" target="_blank" rel="noopener">'+t.openMaps+'</a></div></div>';
  return o}
@@ -676,13 +728,13 @@ function renderList(){
   if(!st.selArea||!gs.some(function(g){return g.k===st.selArea}))st.selArea=gs[0].k;
   gs.forEach(function(g){
    var a=AREA[g.k],tot=g.t.length+g.m.length,on=g.k===st.selArea,d=distArea(g.k);
-   out+='<li><button type="button" class="card" data-area="'+g.k+'" aria-pressed="'+on+'"><span><span class="c-name">'+esc(nameOf(a))+'</span><span class="c-meta"><span class="chip">'+n(g.t.length)+' '+t.nTemple+'</span><span class="chip">'+n(g.m.length)+' '+t.nMandap+'</span>'+(d!==null?'<span>'+km(d)+' '+t.km+'</span>':'')+'</span></span><span class="c-dist"><span class="gnum">'+n(tot)+'</span><small>'+(st.lang==='bn'?'টি পূজা':(tot===1?'puja':'pujas'))+'</small></span></button>';
+   out+='<li><button type="button" class="card" data-area="'+g.k+'" aria-pressed="'+on+'"><span><span class="c-name">'+esc(nameOf(a))+'</span><span class="c-meta"><span class="chip">'+n(g.t.length)+' '+t.nTemple+'</span>'+(TO(g.k)?'':'<span class="chip">'+n(g.m.length)+' '+t.nMandap+'</span>')+(d!==null?'<span>'+km(d)+' '+t.km+'</span>':'')+'</span></span><span class="c-dist"><span class="gnum">'+n(tot)+'</span><small>'+(st.lang==='bn'?'টি পূজা':(tot===1?'puja':'pujas'))+'</small></span></button>';
    if(on){
     out+='<div class="gbody">';
     if(g.t.length){out+='<div class="sub-h">'+t.secTemple+' · '+n(g.t.length)+'</div><ul class="list">'+g.t.map(function(p){return cardHTML(p,true)}).join('')+'</ul>'}
-    out+='<div class="sub-h">'+t.secMandap+' · '+n(g.m.length)+'</div>';
+    if(!TO(g.k)){out+='<div class="sub-h">'+t.secMandap+' · '+n(g.m.length)+'</div>';
     if(g.m.length){out+='<ul class="list">'+g.m.map(function(p){return cardHTML(p,true)}).join('')+'</ul><button type="button" class="btn" data-addarea="'+g.k+'">'+t.addMandap+'</button>'}
-    else out+=emptyMandap(g.k);
+    else out+=emptyMandap(g.k);}
     out+='</div>'}
    out+='</li>'});
   ul.innerHTML=out;return}
@@ -744,27 +796,27 @@ function calStatus(c){
  return{k:'left',d:ds}}
 function statusText(s){var t=T();if(s.k==='done')return t.done;if(s.k==='live')return s.today?t.todayL:t.liveNow;return t.left(s.d)}
 var TICK_SVG='<svg viewBox="0 0 10 10" width="10" height="10" aria-hidden="true"><path d="M2 5.2L4.2 7.4L8 2.8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+var SP='';[[-30,0],[22,.5],[-12,1],[34,1.5],[-38,2],[8,2.4]].forEach(function(a){SP+='<i class="sp" style="--x:'+a[0]+'px;animation-delay:'+a[1]+'s"></i>'});
+function upDate(c){var d=new Date(c.s[0],c.s[1],c.s[2]),o=WD[st.lang][d.getDay()]+', '+n(c.s[2])+' '+MON[st.lang][c.s[1]];if(c.e)o+=' – '+n(c.e[2])+' '+MON[st.lang][c.e[1]];return o}
 function renderCal(){
  var t=T(),items=CAL.map(function(c){return{c:c,s:calStatus(c)}});
  var nd=items.filter(function(i){return i.s.k==='done'}).length,nl=items.length-nd;
  var next=null;items.forEach(function(i){if(!next&&i.s.k!=='done')next=i});
- $('calTitle').textContent=t.calTitle;$('calSum').textContent=t.sum(n(nd),n(nl));
- $('upnext').innerHTML=next
-  ?'<div class="upnext">'+festIcon(next.c.k)+'<div><div class="un-k">'+t.upLabel+'</div><div class="un-name">'+esc(nameOf(next.c))+'</div><div class="un-meta">'+fmtRange(next.c.s,next.c.e)+' · '+statusText(next.s)+'</div></div></div>'
-  :'<div class="upnext"><div><div class="un-k">'+t.upLabel+'</div><div class="un-name">'+t.yearEnd+'</div></div></div>';
+ $('calTitle').textContent=t.calTitle;
+ $('upnext').innerHTML='<div class="upnext"><div class="un-k">'+t.upLabel+'</div>'+(next?'<div class="un-stage">'+festIcon(next.c.k)+SP+'</div><div class="un-name">'+esc(nameOf(next.c))+'</div><div class="un-date">'+upDate(next.c)+'</div><div class="un-pill">'+(next.s.k==='left'?t.upIn(next.s.d):statusText(next.s))+'</div>':'<div class="un-name">'+t.yearEnd+'</div>')+'</div>';
  var out='';
  items.forEach(function(i){
   var k=i.s.k,cls=k==='left'?(i===next?'next':'left'):k;
   out+='<li class="'+cls+'"><span class="dot">'+(k==='done'?TICK_SVG:'')+'</span><span class="fw">'+festIcon(i.c.k)+'</span><div class="tb"><div class="tl-name">'+esc(nameOf(i.c))+'</div><div class="tl-date">'+fmtRange(i.c.s,i.c.e)+'</div></div><span class="status">'+statusText(i.s)+'</span></li>'});
  $('tl').innerHTML=out;
- $('calNote').textContent=t.calNote}
+ }
 
 function fillTypes(){
  var t=T(),types=st.fest==='kali'?['sangha','para']:['sarbojanin','sangha'];
  $('fType').innerHTML=types.map(function(k){return '<option value="'+k+'">'+t.types[k]+'</option>'}).join('')}
 function renderStatic(){
  var t=T();document.documentElement.lang=st.lang==='bn'?'bn':'en';
- document.documentElement.dataset.fest=st.fest==='durga'?'durga':'kali';
+ document.documentElement.dataset.fest=st.fest;
  $('appName').textContent=t.name;$('appTag').textContent=t.tag;
  [].forEach.call($('tabs').children,function(b){b.innerHTML=tabIcon(b.dataset.f)+'<span class="lb">'+t[b.dataset.f]+'</span>';b.setAttribute('aria-pressed',b.dataset.f===st.fest)});
  var lg=$('lang');lg.dataset.lang=st.lang;[].forEach.call(lg.querySelectorAll('button'),function(b){b.setAttribute('aria-pressed',b.dataset.l===st.lang)});
@@ -774,12 +826,12 @@ function renderStatic(){
  $('areaList').innerHTML=AREAS.map(function(a){return '<option value="'+esc(nameOf(a))+'"></option>'}).join('');
  $('whereHint').textContent=st.user&&st.user.example?t.exHint:'';
  var vt=$('viewtoggle').children;vt[0].textContent=t.list;vt[1].textContent=t.map;
- $('demoNote').textContent=t.demo;$('fab').textContent=st.fest==='kali'?t.addMandap:t.add;
+ $('demoNote').textContent=t.dev;$('geoNote').textContent=t.geo;$('fab').textContent=st.fest==='kali'?t.addMandap:t.add;
  $('fTitle').textContent=t.fTitle;$('lfName').textContent=t.fName;$('lfArea').textContent=t.fArea;$('lfAddr').textContent=t.fAddr;$('lfType').textContent=t.fType;
  $('lfLink').textContent=t.fLink;$('fLinkHint').textContent=t.fLinkHint;
  $('fNote').textContent=t.fNote;$('fCancel').textContent=t.cancel;$('fSubmit').textContent=t.submit;
  var cur=$('fArea').value;
- $('fArea').innerHTML=AREAS.map(function(a){return '<option value="'+a.k+'">'+esc(nameOf(a))+'</option>'}).join('');
+ $('fArea').innerHTML=AREAS.filter(function(a){return !(st.fest==='kali'&&TO(a.k))}).map(function(a){return '<option value="'+a.k+'">'+esc(nameOf(a))+'</option>'}).join('');
  if(cur)$('fArea').value=cur;
  fillTypes();
  var isCal=st.fest==='cal';$('pujaArea').hidden=isCal;$('calArea').hidden=!isCal;$('fab').hidden=isCal}
