@@ -334,7 +334,7 @@ button{cursor:pointer}
 .rk-d span strong{font-size:1.08rem;font-weight:600;color:var(--fg);letter-spacing:.01em}
 .rk-d span small{font-size:.98rem;font-weight:500;color:var(--fg);opacity:.8;letter-spacing:.01em}
 .rk-d li.past{opacity:.55}
-.rk-d li.now b{color:var(--accent)}
+.rk-d li.now b,.rk-d li.now span strong,.rk-d li.now span small,.rk-d li.now .tm{color:var(--accent);opacity:1}
 .rk-d .tm{margin-left:auto;font-style:normal;font-weight:600;font-size:1.05rem;letter-spacing:.01em;color:var(--fg);white-space:nowrap}
 .rk-d em{font-style:normal;font-size:.78rem;font-weight:700;padding:1px 9px;border-radius:999px;background:var(--accent);color:var(--accent-ink)}
 .rk-t{padding-top:12px;border-top:1px solid var(--line)}
@@ -913,7 +913,7 @@ var RK_ICON='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cur
 function rkPanel(){
  var L=RK[st.lang],t=T(),now=new Date(),td=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
  var rows=RK.d.map(function(x,i){var d=new Date(x[0],x[1],x[2]),k=d.getTime()<td?'past':d.getTime()===td?'now':'';
-  return '<li class="'+k+'"><b>'+L.n[i]+(k==='now'?' · '+L.today:'')+'</b><span><strong>'+n(x[3])+' '+L.m+'</strong><small>'+WD[st.lang][d.getDay()]+', '+n(x[2])+' '+MON[st.lang][x[1]]+'</small></span>'+'<i class="tm">'+(st.lang==='bn'?'বিকেল '+n(x[4]):x[4]+' PM')+'</i></li>'}).join('');
+  return '<li class="'+k+'"><b>'+L.n[i]+''+'</b><span><strong>'+n(x[3])+' '+L.m+'</strong><small>'+WD[st.lang][d.getDay()]+', '+n(x[2])+' '+MON[st.lang][x[1]]+'</small></span>'+'<i class="tm">'+(st.lang==='bn'?'বিকেল '+n(x[4]):x[4]+' PM')+'</i></li>'}).join('');
  return '<div class="rk-panel" id="rkPanel"'+(st.rk?'':' hidden')+'><h3>'+L.t+'</h3><div class="rk-h">'+L.h+'</div><p>'+L.p+'</p><p class="rk-a">'+L.a+'</p><div class="rk-th">'+L.th+'</div><ul class="rk-d">'+rows+'</ul><div class="rk-t"><div class="tn">'+L.tt+'</div><div class="tp">'+L.tp+'</div><a class="dirbtn" href="'+esc(RK.gm)+'" target="_blank" rel="noopener">'+ICON_DIR+t.dir+'</a></div><div class="rk-note">'+L.note+'</div></div>'}
 function renderCal(){
  var t=T(),items=CAL.map(function(c){return{c:c,s:calStatus(c)}});
