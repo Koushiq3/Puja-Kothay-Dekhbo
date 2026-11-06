@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>পূজা কোথায় দেখব</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@600&family=Tiro+Bangla&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@600&family=Tiro+Bangla&family=Noto+Sans+Bengali:wght@500;600;700&display=swap">
 <style>
 /* Layout concept: one night-lit page. Header with language slider and three tabs (Durga, Kali, 2026 calendar), a countdown, then list and schematic map side by side on wide screens. Kali groups puja by area with a count; the calendar is a vertical timeline. */
 :root{
@@ -169,7 +169,7 @@ button{cursor:pointer}
 .sub-h::after{content:"";flex:1;border-top:1px dashed var(--line)}
 .ahead{display:flex;flex-direction:column;gap:6px;margin-bottom:4px}
 .ahead h3{margin:0;font-family:var(--font-display);font-weight:400;font-size:1.5rem}
-.back{align-self:flex-start;background:none;border:0;padding:4px 14px 4px 0;color:var(--accent);font-weight:700;font-size:1.6rem;line-height:1;min-height:44px}
+.back{align-self:flex-start;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;border:1px solid color-mix(in srgb,var(--accent) 40%,transparent);border-radius:50%;background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--accent);font-weight:700;font-size:1.05rem;line-height:1}
 .emptybox{border:1px dashed var(--line);border-radius:10px;padding:12px;color:var(--muted);font-size:.9rem;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
 .empty{border:1px dashed var(--line);border-radius:12px;padding:24px;text-align:center;color:var(--muted);display:flex;flex-direction:column;gap:10px;align-items:center}
 
@@ -312,6 +312,41 @@ button{cursor:pointer}
   .splash h1,.splash p,.splash .sbrand{opacity:1}
   .diya.lit .flame{opacity:1!important;transform:none!important}
 }
+
+/* rakher upobash panel */
+.tl li.rk{flex-wrap:wrap;cursor:pointer}
+.rk-ic{display:inline-grid;place-items:center;width:26px;height:26px;margin-left:8px;vertical-align:-6px;border-radius:8px;border:1px solid var(--line);background:var(--surface2);color:var(--accent);padding:0}
+.rk-ic svg{width:15px;height:15px}
+.tl li.rk.open .rk-ic{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.rk-panel{flex-basis:100%;order:9;margin-top:10px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface2);cursor:default}
+.rk-panel[hidden]{display:none}
+.rk-panel h3{margin:0 0 6px;font-family:var(--font-display);font-weight:400;font-size:1.1rem}
+.rk-h{margin:0 0 8px;color:var(--accent);font-weight:700;font-size:.92rem}
+.rk-panel p.rk-a{margin:-4px 0 14px;font-size:.86rem;font-style:italic}
+.rk-panel p{margin:0 0 12px;color:var(--muted);line-height:1.6}
+.rk-th{text-align:right;font-size:.78rem;font-weight:700;color:var(--muted);margin:0 0 -2px}
+.rk-d,.rk-d b,.rk-d span,.rk-d .tm{font-family:'Noto Sans Bengali','Hind Siliguri',system-ui,sans-serif;font-variant-numeric:lining-nums tabular-nums}
+.rk-d{list-style:none;margin:0 0 14px;padding:0}
+.rk-d li{display:flex;flex-wrap:nowrap;align-items:center;gap:2px 8px;margin:0;padding:8px 0;border-bottom:1px solid var(--line)}
+.rk-d li:last-child{border-bottom:0}
+.rk-d b{min-width:3.6em;white-space:nowrap;font-weight:700;font-size:1.05rem}
+.rk-d span{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px;line-height:1.35}
+.rk-d span strong{font-size:1.08rem;font-weight:600;color:var(--fg);letter-spacing:.01em}
+.rk-d span small{font-size:.98rem;font-weight:500;color:var(--fg);opacity:.8;letter-spacing:.01em}
+.rk-d li.past{opacity:.55}
+.rk-d li.now b{color:var(--accent)}
+.rk-d .tm{margin-left:auto;font-style:normal;font-weight:600;font-size:1.05rem;letter-spacing:.01em;color:var(--fg);white-space:nowrap}
+.rk-d em{font-style:normal;font-size:.78rem;font-weight:700;padding:1px 9px;border-radius:999px;background:var(--accent);color:var(--accent-ink)}
+.rk-t{padding-top:12px;border-top:1px solid var(--line)}
+.rk-t .tn{font-weight:700}
+.rk-t .tp{color:var(--muted);margin:2px 0 10px}
+.rk-t a.dirbtn{display:block;text-align:center;text-decoration:none;padding:12px;border-radius:10px;background:var(--accent);color:var(--accent-ink);font-weight:700}
+.rk-note{margin:10px 0 0;font-size:.8rem;color:var(--muted)}
+.addcard{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border:1px solid var(--line);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:12px;color:var(--accent);background:transparent;text-align:left;cursor:pointer;font:inherit}
+.addcard .ac-ic{width:38px;height:38px;border-radius:50%;border:1.5px solid color-mix(in srgb,var(--accent) 55%,transparent);background:color-mix(in srgb,var(--accent) 10%,transparent);display:flex;align-items:center;justify-content:center;flex:none}
+.addcard .ac-ic svg{width:18px;height:18px}
+.addcard b{display:block;font-family:var(--font-display);font-weight:400;font-size:1.1rem;color:var(--fg);line-height:1.3}
+.addcard small{display:block;color:var(--muted);font-size:.84rem;line-height:1.4;margin-top:2px}
 [hidden]{display:none!important}
 html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{margin:0}
@@ -391,7 +426,7 @@ body{margin:0}
     <ol class="tl" id="tl"></ol>
   </section>
 
-  <footer class="foot"><span class="brandline" id="brandNote"></span><span id="demoNote"></span><span id="geoNote"></span></footer>
+  <footer class="foot"><span id="demoNote"></span><span id="geoNote"></span></footer>
 </div>
 
 <button class="fab" id="fab" type="button"></button>
@@ -456,6 +491,10 @@ var AREAS=[
  {k:'malibagh',bn:'মালিবাগ',en:'Malibagh',lat:23.7490,lng:90.4160}
 ];
 var AREA={};AREAS.forEach(function(a){AREA[a.k]=a});
+var THANAS=[['adabor','Adabor','আদাবর'],['','Airport','বিমানবন্দর'],['','Badda','বাড্ডা'],['banani','Banani','বনানী'],['','Bangshal','বংশাল'],['','Bhashantek','ভাষানটেক'],['','Cantonment','ক্যান্টনমেন্ট'],['','Chackbazar','চকবাজার'],['','Dakshin Khan','দক্ষিণখান'],['','Darus-Salam','দারুস সালাম'],['','Demra','ডেমরা'],['dhanmondi','Dhanmondi','ধানমন্ডি'],['','Gandaria','গেন্ডারিয়া'],['gulshan','Gulshan','গুলশান'],['','Hatirjheel','হাতিরঝিল'],['','Hazaribagh','হাজারীবাগ'],['','Jattrabari','যাত্রাবাড়ী'],['','Kadamtoli','কদমতলী'],['','Kafrul','কাফরুল'],['kalabagan','Kalabagan','কলাবাগান'],['','Kamrangirchar','কামরাঙ্গীরচর'],['','Khilgaon','খিলগাঁও'],['','Khilkhet','খিলক্ষেত'],['','Kotwali','কোতোয়ালী'],['lalbagh','Lalbagh','লালবাগ'],['mirpur','Mirpur','মিরপুর'],['','Mohammadpur','মোহাম্মদপুর'],['motijheel','Motijheel','মতিঝিল'],['','Mugda','মুগদা'],['','New Market','নিউমার্কেট'],['','Pallabi','পল্লবী'],['','Paltan','পল্টন'],['ramna','Ramna','রমনা'],['','Rampura','রামপুরা'],['','Rupnagar','রূপনগর'],['sabujbagh','Sabujbagh','সবুজবাগ'],['','Shah Ali','শাহ আলী'],['shahbag','Shahbagh','শাহবাগ'],['','Shahjahanpur','শাহজাহানপুর'],['','Sher-e-Bangla Nagar','শেরেবাংলা নগর'],['','Shyampur','শ্যামপুর'],['sutrapur','Sutrapur','সূত্রাপুর'],['','Tejgaon','তেজগাঁও'],['','Tejgaon Industrial Area','তেজগাঁও শিল্পাঞ্চল'],['','Turag','তুরাগ'],['','Uttar Khan','উত্তরখান'],['','Uttara East','উত্তরা পূর্ব'],['','Uttara West','উত্তরা পশ্চিম'],['','Vatara','ভাটারা'],['wari','Wari','ওয়ারী']];
+THANAS.forEach(function(t,i){var k=t[0]&&AREA[t[0]]?t[0]:'t_'+i;t.key=k;if(!AREA[k])AREA[k]={k:k,bn:t[2],en:t[1]}});
+var ADD_ORDER=[];(function(){var seen={};['shakhari','tanti','sutrapur','wari'].forEach(function(k){ADD_ORDER.push(k);seen[k]=1});THANAS.slice().sort(function(a,b){return a[1]<b[1]?-1:1}).forEach(function(t){if(!seen[t.key]){ADD_ORDER.push(t.key);seen[t.key]=1}});AREAS.forEach(function(a){if(!seen[a.k]){ADD_ORDER.push(a.k);seen[a.k]=1}})})();
+
 var TEMPLE_ONLY=['ramna','siddheshwari','sabujbagh','dhakeshwari','ramakrishna','postogola'];
 var MA=['shakhari','tanti','sutrapur','wari'];
 function inMA(k){return MA.indexOf(k)>-1}
@@ -486,13 +525,13 @@ var PUJAS=[
  {id:'k10',f:'kali',bn:'রামকৃষ্ণ মঠ ও রামকৃষ্ণ মিশন, ঢাকা',en:'Ramakrishna Math and Ramakrishna Mission, Dhaka',a:'ramakrishna',t:'mandir',
   ab:'২৭, রামকৃষ্ণ মিশন রোড, ঢাকা–১২০৩, বাংলাদেশ',ae:'27, Ramakrishna Mission Road, Dhaka 1203, Bangladesh'},
  {id:'d1',f:'durga',bn:'ঢাকেশ্বরী জাতীয় মন্দির',en:'Dhakeshwari National Temple',a:'dhakeshwari',t:'mandir',
-  ab:'ঢাকেশ্বরী রোড, পলাশীর মোড়ের কাছে। দেশের সবচেয়ে বড় দুর্গাপূজা এখানে হয়',ae:'Dhakeshwari Road, near Palashi intersection. Home of the country’s largest Durga Puja'},
- {id:'d2',f:'durga',bn:'রমনা কালী মন্দির',en:'Ramna Kali Mandir',a:'ramna',t:'mandir',
-  ab:'রমনা পার্কের দক্ষিণে, সোহরাওয়ার্দী উদ্যানের পাশে, বাংলা একাডেমির বিপরীতে',ae:'South of Ramna Park, beside Suhrawardy Udyan, opposite Bangla Academy'},
+  ab:'ঢাকেশ্বরী রোড, বকশীবাজার, পুরান ঢাকা, ঢাকা–১২১১, বাংলাদেশ। দেশের সবচেয়ে বড় দুর্গাপূজা এখানে হয়',ae:'Dhakeshwari Road, Bakshi Bazar, Old Dhaka 1211, Bangladesh। Home of the country’s largest Durga Puja'},
+ {id:'d2',f:'durga',q:'Ramna Kali Mandir, Ramna, Dhaka',bn:'রমনা কালী মন্দির',en:'Ramna Kali Mandir',a:'ramna',t:'mandir',
+  ab:'৯–১০, পুরাতন ময়মনসিংহ রোড, কাজী নজরুল ইসলাম অ্যাভিনিউ, ঢাকা–১০০০, বাংলাদেশ (রমনা পার্কের দক্ষিণে, বাংলা একাডেমির বিপরীতে)',ae:'9–10, Old Mymensingh Road, Kazi Nazrul Islam Avenue, Dhaka 1000, Bangladesh (south of Ramna Park, opposite Bangla Academy)'},
  {id:'d3',f:'durga',bn:'জগন্নাথ হল (শিব মন্দির)',en:'Jagannath Hall (Shiv Mandir)',a:'jagannath',t:'sarbojanin',
   ab:'ঢাকা বিশ্ববিদ্যালয় ক্যাম্পাসে, জগন্নাথ হলের শিব মন্দির ও পুকুরের পাশে',ae:'On the University of Dhaka campus, Jagannath Hall Shiv Mandir beside the pond'},
  {id:'d4',f:'durga',bn:'রামকৃষ্ণ মিশন',en:'Ramakrishna Mission',a:'ramakrishna',t:'mandir',
-  ab:'আর. কে. মিশন রোড, টিকাটুলি-মতিঝিল এলাকা',ae:'R. K. Mission Road, Tikatuli–Motijheel area'},
+  ab:'২৭, রামকৃষ্ণ মিশন রোড, ঢাকা–১২০৩, বাংলাদেশ',ae:'27, Ramakrishna Mission Road, Dhaka 1203, Bangladesh'},
  {id:'d5',f:'durga',bn:'শাঁখারি বাজার পূজা মণ্ডপ',en:'Shakhari Bazar Puja Mandap',a:'shakhari',t:'sarbojanin',
   ab:'পুরান ঢাকার শাঁখারি বাজারের সরু গলির ভেতরে, একাধিক মণ্ডপ',ae:'Inside the narrow lanes of Shakhari Bazar, Old Dhaka, with several mandaps'},
  {id:'d6',f:'durga',bn:'তাঁতি বাজার পূজা মণ্ডপ',en:'Tanti Bazar Puja Mandap',a:'tanti',t:'sarbojanin',
@@ -507,10 +546,11 @@ var PUJAS=[
   ab:'খামারবাড়ি, কৃষিবিদ ইনস্টিটিউশন বাংলাদেশ (কেআইবি) ভবনের পাশে',ae:'Khamarbari, beside Krishibid Institution Bangladesh (KIB)'},
  {id:'d11',f:'durga',bn:'মহাখালী সার্বজনীন',en:'Mohakhali Sarbojanin',a:'mohakhali',t:'sarbojanin'},
  {id:'d12',f:'durga',bn:'উত্তরা সার্বজনীন',en:'Uttara Sarbojanin',a:'uttara',t:'sarbojanin'},
- {id:'d13',f:'durga',bn:'শাহিনবাগ সার্বজনীন',en:'Shahinbagh Sarbojanin',a:'shahinbagh',t:'sarbojanin'},
+ {id:'d13',f:'durga',q:'Shaheenbag Sarbojanin Puja Mandir, Tejgaon, Dhaka',bn:'শাহিনবাগ সার্বজনীন',en:'Shahinbagh Sarbojanin',a:'shahinbagh',t:'sarbojanin',
+  ab:'শাহীনবাগ, তেজগাঁও, ঢাকা–১২১৫, বাংলাদেশ (সিভিল এভিয়েশন স্কুলের কাছে)',ae:'Shaheenbag, Tejgaon, Dhaka 1215, Bangladesh (near Civil Aviation School)'},
  {id:'d14',f:'durga',bn:'কাওলা সার্বজনীন',en:'Kawla Sarbojanin',a:'kawla',t:'sarbojanin'},
- {id:'d15',f:'durga',bn:'সিদ্ধেশ্বরী কালী মন্দির',en:'Siddheshwari Kali Mandir',a:'siddheshwari',t:'mandir',
-  ab:'সিদ্ধেশ্বরী লেন, মৌচাক মার্কেটের কাছে, সিদ্ধেশ্বরী, ঢাকা–১২১৭',ae:'Siddheswari Lane, near Mouchak Market, Siddheswari, Dhaka 1217'},
+ {id:'d15',f:'durga',q:'Siddheswari Kali Mandir, Siddheswari Lane, Dhaka',bn:'সিদ্ধেশ্বরী কালী মন্দির',en:'Siddheshwari Kali Mandir',a:'siddheshwari',t:'mandir',
+  ab:'সিদ্ধেশ্বরী লেন, মৌচাক মার্কেটের কাছে, সিদ্ধেশ্বরী, ঢাকা–১২১৭, বাংলাদেশ',ae:'Siddheswari Lane, near Mouchak Market, Siddheswari, Dhaka 1217, Bangladesh'},
  {id:'d16',f:'durga',bn:'বসুন্ধরা সার্বজনীন',en:'Bashundhara Sarbojanin',a:'bashundhara',t:'sarbojanin'}
 ];
 
@@ -539,8 +579,8 @@ var S={
   d27note:'পাঁচ দিনের পূজা বিজয়া দশমীতে শেষ হয়। চূড়ান্ত তারিখ সরকারি ছুটির ঘোষণার পর ঠিক হবে। ষষ্ঠী প্রায় ৪–৫ অক্টোবর, তারিখটা আমাদের হিসাব, নিশ্চিত নয়।',
   d27now:'২০২৬ এর দুর্গাপূজা শেষ হয়েছে (বিজয়া দশমী ২১ অক্টোবর)।',
   dd:['ষষ্ঠী','সপ্তমী','অষ্টমী','নবমী','দশমী'],
-  list:'তালিকা',map:'ম্যাপ',count:function(n){return n+'টি পূজা'},near:'আপনার অবস্থান থেকে কাছের ক্রমে',
-  none:'কিছু পাওয়া যায়নি।',add:'+ পূজা যোগ করুন',addMandap:'+ মণ্ডপ যোগ করুন',km:'কিমি',away:'সোজা দূরত্ব',
+  list:'তালিকা',map:'ম্যাপ',count:function(n){return n},near:'আপনার অবস্থান থেকে কাছের ক্রমে',
+  none:'কিছু পাওয়া যায়নি।',add:'+ পূজা যোগ করুন',addTitleM:'মণ্ডপ যোগ করুন',addSubM:'এই এলাকার মণ্ডপের নাম ও ঠিকানা জানান।',addTitle:'পূজা মণ্ডপ যোগ করুন',addSub:'নাম ও ঠিকানা জানান, আমরা যাচাই করে তালিকায় রাখব।',addMandap:'+ মণ্ডপ যোগ করুন',km:'কিমি',away:'সোজা দূরত্ব',
   types:{mandir:'মন্দির',mahashmashan:'মহাশ্মশান',sarbojanin:'সার্বজনীন',sangha:'সংঘের পূজা',para:'পাড়ার পূজা'},pending:'কমিউনিটি · অপেক্ষমাণ',
   addr:'ঠিকানা',where2:'কোথায় অবস্থিত',dir:'দিকনির্দেশনা',nearby:'কাছাকাছি',nearTitle:'কাছের আরও পূজা',nearNote:'এলাকা ধরে কাছের ক্রম, মোটামুটি। সঠিক দূরত্বের জন্য Directions চাপুন।',mapFail:'ম্যাপ না দেখা গেলে নিচের লিঙ্কে খুলুন।',locV:'অবস্থান: উইকিপিডিয়ার কোঅর্ডিনেট থেকে নেওয়া',locA:'অবস্থান আনুমানিক, যাচাই বাকি',
   copyLink:'গুগল ম্যাপ লিঙ্ক কপি',copied:'লিঙ্ক কপি হয়েছে',copyFail:'কপি হয়নি। নিচের লিঙ্কটা হাতে কপি করুন।',openMaps:'Google Maps-এ খুলুন',
@@ -555,7 +595,7 @@ var S={
   done:'সম্পন্ন',liveNow:'এখন চলছে',todayL:'আজ',upIn:function(d){return d===1?'আগামীকাল':'আর '+n(d)+' দিন বাকি'},left:function(d){return d===1?'আগামীকাল':'আর '+n(d)+' দিন'},
   sum:function(a,b){return a+'টি সম্পন্ন · '+b+'টি বাকি আছে'},
   calNote:'তারিখ পঞ্জিকা ও সরকারি ঘোষণা অনুযায়ী একদিন এদিক-ওদিক হতে পারে। ২০২৬ শেষ হলে ২০২৭ এর উৎসব যোগ হবে।',
-  fTitle:'আপনার পূজা যোগ করুন',fName:'পূজা বা সংঘের নাম',fArea:'এলাকা',fAddr:'ঠিকানা (লেন, রোড, বাড়ি)',fType:'ধরন',
+  fTitle:'পূজা মণ্ডপ যোগ করুন',fName:'মন্দির বা সংঘের নাম',fArea:'এলাকা',fAddr:'ঠিকানা (লেন, রোড, বাড়ি)',fType:'ধরন',
   fLink:'গুগল ম্যাপ লিঙ্ক (ঐচ্ছিক)',fLinkHint:'Google Maps-এ জায়গাটা খুলে Share চেপে লিঙ্ক কপি করুন, তারপর এখানে পেস্ট করুন।',badLink:'লিঙ্কটা https দিয়ে শুরু হতে হবে।',
   fNote:'ডেমোতে এটি শুধু আপনার ব্রাউজারে থাকে। আসল অ্যাপে অ্যাডমিন দেখে অনুমোদন দিলে সবার জন্য প্রকাশ হবে।',
   cancel:'বাতিল',submit:'জমা দিন',added:'জমা হয়েছে। অনুমোদনের অপেক্ষায়।'},
@@ -568,8 +608,8 @@ var S={
   d27note:'The five-day puja ends on Bijoya Dashami. Final dates are set once the government announces the holidays. Shashthi should be around 4–5 October, which is our own estimate and not confirmed.',
   d27now:'Durga Puja 2026 has ended (Bijoya Dashami was 21 October).',
   dd:['Shashthi','Saptami','Ashtami','Navami','Dashami'],
-  list:'List',map:'Map',count:function(n){return n+(n===1?' puja':' pujas')},near:'Nearest to your location first',
-  none:'Nothing found.',add:'+ Add a puja',addMandap:'+ Add a mandap',km:'km',away:'Straight-line distance',
+  list:'List',map:'Map',count:function(n){return n},near:'Nearest to your location first',
+  none:'Nothing found.',add:'+ Add a puja',addTitleM:'Add a mandap',addSubM:'Share the name and address of a mandap in this area.',addTitle:'Add a puja mandap',addSub:'Share the name and address. We\'ll verify it before listing.',addMandap:'+ Add a mandap',km:'km',away:'Straight-line distance',
   types:{mandir:'Temple',mahashmashan:'Mahashmashan',sarbojanin:'Sarbojanin',sangha:'Club puja',para:'Neighbourhood puja'},pending:'Community · pending',
   addr:'Address',where2:'Where it is',dir:'Directions',nearby:'Nearby',nearTitle:'Other pujas nearby',nearNote:'Nearest by area, approximate. Tap Directions for the exact distance.',mapFail:'If the map does not load, use the link below.',locV:'Position taken from the place’s Wikipedia coordinates',locA:'Approximate position, not yet verified',
   copyLink:'Copy Google Maps link',copied:'Link copied',copyFail:'Copy failed. Copy the link below by hand.',openMaps:'Open in Google Maps',
@@ -584,7 +624,7 @@ var S={
   done:'Completed',liveNow:'Happening now',todayL:'Today',upIn:function(d){return d===1?'Tomorrow':d+' days to go'},left:function(d){return d===1?'Tomorrow':'In '+d+' days'},
   sum:function(a,b){return a+' completed · '+b+' upcoming'},
   calNote:'Dates follow published calendars and official announcements and may shift by a day. The 2027 festivals will be added once 2026 ends.',
-  fTitle:'Add your puja',fName:'Puja or club name',fArea:'Area',fAddr:'Address (lane, road, house)',fType:'Type',
+  fTitle:'Add a puja mandap',fName:'Temple or club name',fArea:'Area',fAddr:'Address (lane, road, house)',fType:'Type',
   fLink:'Google Maps link (optional)',fLinkHint:'Open the place in Google Maps, tap Share, copy the link and paste it here.',badLink:'The link must start with https.',
   fNote:'In this demo it stays in your browser only. In the real app, an admin approves it before it goes public.',
   cancel:'Cancel',submit:'Submit',added:'Submitted. Waiting for approval.'}
@@ -606,7 +646,7 @@ function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp
 function nameOf(o){return st.lang==='bn'?o.bn:o.en}
 function all(){return PUJAS.concat(st.extra)}
 function kindOf(p){return (p.t==='mandir'||p.t==='mahashmashan')?'temple':'mandap'}
-function haversine(a,b,c,d){var R=6371,r=Math.PI/180,dl=(c-a)*r,dg=(d-b)*r;
+function haversine(a,b,c,d){if(!(a>0&&b>0&&c>0&&d>0))return 1e9;var R=6371,r=Math.PI/180,dl=(c-a)*r,dg=(d-b)*r;
  var x=Math.sin(dl/2)*Math.sin(dl/2)+Math.cos(a*r)*Math.cos(c*r)*Math.sin(dg/2)*Math.sin(dg/2);
  return 2*R*Math.asin(Math.sqrt(x))}
 function distArea(k){if(!st.user)return null;var a=AREA[k];return haversine(st.user.lat,st.user.lng,a.lat,a.lng)}
@@ -650,6 +690,8 @@ function isGroupView(){return SHOW_MANDAP&&st.fest==='kali'&&st.kind==='all'}
 
 /* ---------- splash ---------- */
 var BRAND='Bringing every celebration closer to you';
+function addBtn(area,title,sub){return '<button type="button" class="addcard" data-addarea="'+(area||'')+'"><span class="ac-ic"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span><span><b>'+title+'</b><small>'+sub+'</small></span></button>'}
+function addCard(){var t=T();return '<li>'+addBtn('',t.addTitle,t.addSub)+'</li>'}
 function splashHTML(f){
  var art=f==='durga'
  ? '<svg viewBox="0 0 120 130" aria-hidden="true"><g class="smoke"><circle cx="58" cy="52" r="9"/><circle cx="62" cy="52" r="8"/><circle cx="56" cy="52" r="10"/></g>'+
@@ -752,7 +794,7 @@ function cardHTML(p,compact){
 
 function emptyMandap(areaKey){
  var t=T();
- return '<div class="emptybox"><span>'+(areaKey?t.emptyArea:t.emptyMandap)+'</span><button type="button" class="btn primary" data-addarea="'+(areaKey||'')+'">'+t.addMandap+'</button></div>'}
+ return '<div class="emptybox"><span>'+(areaKey?t.emptyArea:t.emptyMandap)+'</span>'+addBtn(areaKey||'',t.addTitleM,t.addSubM)+'</div>'}
 
 function renderList(){
  var t=T(),ul=$('list'),out='';
@@ -763,7 +805,7 @@ function renderList(){
   if(!st.selArea||!gs.some(function(g){return g.k===st.selArea}))st.selArea=gs[0].k;
   gs.forEach(function(g){
    var a=AREA[g.k],tot=g.t.length+g.m.length,on=g.k===st.selArea,d=distArea(g.k);
-   out+='<li><button type="button" class="card" data-area="'+g.k+'" aria-pressed="'+on+'"><span><span class="c-name">'+esc(nameOf(a))+'</span><span class="c-meta"><span class="chip">'+n(g.t.length)+' '+t.nTemple+'</span>'+(TO(g.k)?'':'<span class="chip">'+n(g.m.length)+' '+t.nMandap+'</span>')+'</span></span><span class="c-dist"><span class="gnum">'+n(tot)+'</span><small>'+(st.lang==='bn'?'টি পূজা':(tot===1?'puja':'pujas'))+'</small></span></button>';
+   out+='<li><button type="button" class="card" data-area="'+g.k+'" aria-pressed="'+on+'"><span><span class="c-name">'+esc(nameOf(a))+'</span><span class="c-meta"><span class="chip">'+n(g.t.length)+' '+t.nTemple+'</span>'+(TO(g.k)?'':'<span class="chip">'+n(g.m.length)+' '+t.nMandap+'</span>')+'</span></span><span class="c-dist"><span class="gnum">'+n(tot)+'</span></span></button>';
    if(on){
     out+='<div class="gbody">';
     if(g.t.length){out+='<div class="sub-h">'+t.secTemple+' · '+n(g.t.length)+'</div><ul class="list">'+g.t.map(function(p){return cardHTML(p,true)}).join('')+'</ul>'}
@@ -781,7 +823,7 @@ function renderList(){
   ul.innerHTML=(st.fest==='kali'&&st.kind==='mandap'&&!st.q.trim())?'<li class="empty">'+emptyMandap('')+'</li>':'<li class="empty">'+t.none+'</li>';return}
  if(st.sel&&!arr.some(function(p){return p.id===st.sel}))st.sel=null;
  arr.forEach(function(p){out+=cardHTML(p,false)});
- if(st.fest==='durga')out+='<li><button type="button" class="btn primary" data-addarea="">'+t.add+'</button></li>';
+ if(st.fest==='durga')out+=addCard();
  ul.innerHTML=out}
 
 function areaItems(k){return all().filter(function(p){return p.f==='kali'&&p.a===k})}
@@ -794,14 +836,15 @@ function renderKali(){
   $('cnt').textContent=t.count(n(items.length));
   out+='<li class="ahead"><button type="button" class="back" data-back="1" aria-label="'+t.back+'">←</button><h3>'+esc(nameOf(a))+'</h3></li>';
   if(!items.length)out+='<li>'+emptyMandap(st.area)+'</li>';
-  else{items.forEach(function(p){out+=cardHTML(p,true)});out+='<li><button type="button" class="btn primary" data-addarea="'+st.area+'">'+t.addMandap+'</button>'+(mine?'<div class="hint">'+t.localNote+'</div>':'')+'</li>'}
+  else{items.forEach(function(p){out+=cardHTML(p,true)});out+='<li>'+addBtn(st.area,t.addTitleM,t.addSubM)+(mine?'<div class="hint">'+t.localNote+'</div>':'')+'</li>'}
   ul.innerHTML=out;return}
- var temples=all().filter(function(p){return p.f==='kali'&&kindOf(p)==='temple'&&!inMA(p.a)&&(!q||matches(p,q))});
+ var temples=all().filter(function(p){return p.f==='kali'&&(kindOf(p)==='temple'||String(p.id).charAt(0)==='u')&&!inMA(p.a)&&(!q||matches(p,q))});
  var areas=MA.filter(function(k){return !q||(AREA[k].bn+' '+AREA[k].en).toLowerCase().indexOf(q)>-1||areaItems(k).some(function(p){return matches(p,q)})});
  $('cnt').textContent=t.count(n(temples.length+areas.length))+(st.user&&temples.length?' · '+t.near:'');
  if(!temples.length&&!areas.length){ul.innerHTML='<li class="empty">'+t.none+'</li>';return}
  temples.forEach(function(p){out+=cardHTML(p,false)});
- areas.forEach(function(k){out+='<li><button type="button" class="card" data-open="'+k+'"><span><span class="c-name">'+esc(nameOf(AREA[k]))+'</span></span><span class="c-dist"><span class="gnum">'+n(areaItems(k).length)+'</span><small>'+(st.lang==='bn'?'টি পূজা':'pujas')+' ›</small></span></button></li>'});
+ areas.forEach(function(k){out+='<li><button type="button" class="card" data-open="'+k+'"><span><span class="c-name">'+esc(nameOf(AREA[k]))+'</span></span><span class="c-dist"><span class="gnum">'+n(areaItems(k).length)+'</span></span></button></li>'});
+ out+=addCard();
  ul.innerHTML=out}
 function renderKinds(){
  var t=T(),k=$('kinds');
@@ -858,6 +901,20 @@ function upDate(c){var d=new Date(c.s[0],c.s[1],c.s[2]),o=WD[st.lang][d.getDay()
 function goOf(c){return c.k==='kali'||c.k==='durga'?c.k:''}
 var CHEV='<svg viewBox="0 0 24 24" width="14" height="14"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 function nameLink(c,txt,cls){var g=goOf(c);return g?'<button type="button" class="'+cls+'" data-go="'+g+'">'+txt+' <span class="arr" aria-hidden="true">'+CHEV+'</span></button>':txt}
+
+/* Rakher Upobash (Bangladesh): dates supplied by the owner */
+var RK={
+ d:[[2026,10,3,16,'5:18'],[2026,10,7,20,'5:16'],[2026,10,10,23,'5:15'],[2026,10,14,27,'5:13'],[2026,10,17,30,'5:12']],
+ gm:'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent('Loknath Brahmachari Ashram Baradi Sonargaon Narayanganj'),
+ bn:{t:'রাখের উপবাস',h:'সারাদিন উপবাস, সন্ধ্যায় প্রদীপের আলো',p:'কার্তিকের শেষ পনেরো দিনে প্রতি মঙ্গল ও শনিবার ভক্তরা সারাদিন উপবাসে থাকেন। সন্ধ্যা নামলে আশ্রম প্রাঙ্গণে জ্বলে ওঠে প্রদীপ আর ধূপ। প্রচলিত বিশ্বাস, রোগব্যাধি থেকে রক্ষা পেতে এই ব্রতের কথা বলেছিলেন বাবা লোকনাথ নিজেই।',a:'কেউ একে বলেন কার্তিক ব্রত, কেউ গোঁসাইর উপবাস, কেউ ঘৃতপ্রদীপ প্রজ্বালন।',n:['১ম','২য়','৩য়','৪র্থ','৫ম'],m:'কার্তিক',today:'আজ',tt:'শ্রী শ্রী লোকনাথ ব্রহ্মচারীর আশ্রম',tp:'বারদী, সোনারগাঁও, নারায়ণগঞ্জ',note:'পঞ্জিকা ও আশ্রম ঘোষিত সময়সূচি অনুযায়ী।',lbl:'রাখের উপবাসের বিস্তারিত',th:'প্রদীপ জ্বালানোর সময়'},
+ en:{t:'Rakher Upobash',h:'Fast through the day. Light a lamp at dusk.',p:'Every Tuesday and Saturday in the last fortnight of Kartik, devotees of Lokenath Baba go without food until sunset. Then the ashram courtyard glows with lamps and incense. Tradition says the Baba himself asked his followers to keep this vow, to stay safe from illness.',a:'You may hear it called Kartik Brata, Gosainer Upobash or Ghrita Pradip Prajwalan.',n:['1st','2nd','3rd','4th','5th'],m:'Kartik',today:'Today',tt:'Sri Sri Lokenath Brahmachari Ashram',tp:'Baradi, Sonargaon, Narayanganj',note:'As per the panjika and the schedule announced by the ashram.',lbl:'Rakher Upobash details',th:'Lamp-lighting time'}
+};
+var RK_ICON='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M10 12h6M10 16h6"/></svg>';
+function rkPanel(){
+ var L=RK[st.lang],t=T(),now=new Date(),td=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+ var rows=RK.d.map(function(x,i){var d=new Date(x[0],x[1],x[2]),k=d.getTime()<td?'past':d.getTime()===td?'now':'';
+  return '<li class="'+k+'"><b>'+L.n[i]+(k==='now'?' · '+L.today:'')+'</b><span><strong>'+n(x[3])+' '+L.m+'</strong><small>'+WD[st.lang][d.getDay()]+', '+n(x[2])+' '+MON[st.lang][x[1]]+'</small></span>'+'<i class="tm">'+(st.lang==='bn'?'বিকেল '+n(x[4]):x[4]+' PM')+'</i></li>'}).join('');
+ return '<div class="rk-panel" id="rkPanel"'+(st.rk?'':' hidden')+'><h3>'+L.t+'</h3><div class="rk-h">'+L.h+'</div><p>'+L.p+'</p><p class="rk-a">'+L.a+'</p><div class="rk-th">'+L.th+'</div><ul class="rk-d">'+rows+'</ul><div class="rk-t"><div class="tn">'+L.tt+'</div><div class="tp">'+L.tp+'</div><a class="dirbtn" href="'+esc(RK.gm)+'" target="_blank" rel="noopener">'+ICON_DIR+t.dir+'</a></div><div class="rk-note">'+L.note+'</div></div>'}
 function renderCal(){
  var t=T(),items=CAL.map(function(c){return{c:c,s:calStatus(c)}});
  var nd=items.filter(function(i){return i.s.k==='done'}).length,nl=items.length-nd;
@@ -867,12 +924,13 @@ function renderCal(){
  var out='';
  items.forEach(function(i){
   var k=i.s.k,cls=k==='left'?(i===next?'next':'left'):k;
-  out+='<li class="'+cls+'"><span class="dot">'+(k==='done'?TICK_SVG:'')+'</span><span class="fw">'+festIcon(i.c.k)+'</span><div class="tb"><div class="tl-name">'+esc(nameOf(i.c))+'</div><div class="tl-date">'+fmtRange(i.c.s,i.c.e)+'</div></div><span class="status">'+statusText(i.s)+'</span></li>'});
+  var rk=i.c.k==='rash';
+  out+='<li class="'+cls+(rk?' rk'+(st.rk?' open':''):'')+'"><span class="dot">'+(k==='done'?TICK_SVG:'')+'</span><span class="fw">'+festIcon(i.c.k)+'</span><div class="tb"><div class="tl-name">'+esc(nameOf(i.c))+(rk?'<button type="button" class="rk-ic" aria-expanded="'+(!!st.rk)+'" aria-controls="rkPanel" aria-label="'+RK[st.lang].lbl+'">'+RK_ICON+'</button>':'')+'</div><div class="tl-date">'+fmtRange(i.c.s,i.c.e)+'</div></div><span class="status">'+statusText(i.s)+'</span>'+(rk?rkPanel():'')+'</li>'});
  $('tl').innerHTML=out;
  }
 
 function fillTypes(){
- var t=T(),types=st.fest==='kali'?['sangha','para']:['sarbojanin','sangha'];
+ var t=T(),types=['sangha','mandir'];
  $('fType').innerHTML=types.map(function(k){return '<option value="'+k+'">'+t.types[k]+'</option>'}).join('')}
 function renderStatic(){
  var t=T();document.documentElement.lang=st.lang==='bn'?'bn':'en';
@@ -886,12 +944,12 @@ function renderStatic(){
  $('areaList').innerHTML=AREAS.map(function(a){return '<option value="'+esc(nameOf(a))+'"></option>'}).join('');
  $('whereHint').textContent=st.user&&st.user.example?t.exHint:'';
  var vt=$('viewtoggle').children;vt[0].textContent=t.list;vt[1].textContent=t.map;
- $('brandNote').textContent=BRAND;$('demoNote').textContent=t.dev;$('geoNote').textContent=t.geo;$('fab').textContent=st.fest==='kali'?t.addMandap:t.add;
+ $('demoNote').textContent=t.dev;$('geoNote').textContent=t.geo;$('fab').textContent=st.fest==='kali'?t.addMandap:t.add;
  $('fTitle').textContent=t.fTitle;$('lfName').textContent=t.fName;$('lfArea').textContent=t.fArea;$('lfAddr').textContent=t.fAddr;$('lfType').textContent=t.fType;
  $('lfLink').textContent=t.fLink;$('fLinkHint').textContent=t.fLinkHint;
  $('fNote').textContent=t.fNote;$('fCancel').textContent=t.cancel;$('fSubmit').textContent=t.submit;
  var cur=$('fArea').value;
- $('fArea').innerHTML=AREAS.filter(function(a){return st.fest!=='kali'||inMA(a.k)}).map(function(a){return '<option value="'+a.k+'">'+esc(nameOf(a))+'</option>'}).join('');
+ $('fArea').innerHTML=ADD_ORDER.map(function(k){return '<option value="'+k+'">'+esc(nameOf(AREA[k]))+'</option>'}).join('');
  if(cur)$('fArea').value=cur;
  fillTypes();
  var isCal=st.fest==='cal';$('pujaArea').hidden=isCal;$('calArea').hidden=!isCal;$('fab').hidden=true}
@@ -910,7 +968,7 @@ function copyText(text,btn){
 
 /* ---------- events ---------- */
 $('lang').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;st.lang=b.dataset.l;try{localStorage.setItem('pkd_lang',st.lang)}catch(x){}renderAll()});
-$('calArea').addEventListener('click',function(e){var b=e.target.closest('button[data-go]');if(!b)return;st.fest=b.dataset.go;st.sel=null;st.selArea=null;st.area=null;st.kind='all';st.q='';$('search').value='';renderAll();window.scrollTo(0,0)});
+$('calArea').addEventListener('click',function(e){var r=e.target.closest('li.rk');if(r&&!e.target.closest('.rk-panel')){st.rk=!st.rk;r.classList.toggle('open',st.rk);var p=$('rkPanel');if(p)p.hidden=!st.rk;var ib=r.querySelector('.rk-ic');if(ib)ib.setAttribute('aria-expanded',st.rk);return}var b=e.target.closest('button[data-go]');if(!b)return;st.fest=b.dataset.go;st.sel=null;st.selArea=null;st.area=null;st.kind='all';st.q='';$('search').value='';renderAll();window.scrollTo(0,0)});
 $('tabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;st.fest=b.dataset.f;st.sel=null;st.selArea=null;st.area=null;st.kind='all';st.q='';$('search').value='';renderAll()});
 $('kinds').addEventListener('click',function(e){var b=e.target.closest('button[data-k]');if(!b)return;st.kind=b.dataset.k;st.sel=null;renderKinds();renderList();renderMap()});
 $('search').addEventListener('input',function(e){st.q=e.target.value;renderList();renderMap()});
@@ -958,7 +1016,7 @@ $('addForm').addEventListener('submit',function(e){
  if(lk)item.gm=lk;
  st.extra.push(item);try{localStorage.setItem('pkd_extra2',JSON.stringify(st.extra))}catch(x){}
  $('addForm').reset();$('sheet').hidden=true;st.q='';$('search').value='';
- if(item.f==='kali'){st.kind='all';st.selArea=item.a;st.area=item.a;st.sel=item.id}else{st.sel=item.id}
+ if(item.f==='kali'){st.kind='all';if(inMA(item.a)){st.selArea=item.a;st.area=item.a}st.sel=item.id}else{st.sel=item.id}
  renderAll();toast(T().added)});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){$('sheet').hidden=true;if(!$('splash').hidden)closeSplash()}});
 
