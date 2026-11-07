@@ -1034,12 +1034,12 @@ function clip(x){return String(x||'').replace(/[<>]/g,'').trim().slice(0,140)}
 function remoteFromCSV(txt){
  var rows=parseCSV(txt),out=[],nw=rows.length&&rows[0].length>=10;
  rows.slice(1).forEach(function(r,i){
-  var nb,ne,abn,aen,ab,ae,ty,gm,la,lo;
-  if(nw){nb=clip(r[0]);ne=clip(r[1]);abn=r[2];aen=r[3];ab=clip(r[4]);ae=clip(r[5]);ty=r[6];gm=r[7];la=r[8];lo=r[9]}
+  var nb,ne,abn,aen,ab,ae,ty,gm,la,lo,pj='';
+  if(nw){nb=clip(r[0]);ne=clip(r[1]);abn=r[2];aen=r[3];ab=clip(r[4]);ae=clip(r[5]);ty=r[6];gm=r[7];la=r[8];lo=r[9];pj=String(r[10]||'')}
   else{nb=clip(r[0]);ne=nb;abn=r[1];aen='';ab=clip(r[2]);ae=ab;ty=r[3];gm=r[4];la=r[5];lo=r[6]}
   nb=nb||ne;ne=ne||nb;if(!nb)return;
   gm=String(gm||'').trim();la=parseFloat(la);lo=parseFloat(lo);
-  var it={id:'ur'+i,f:'kali',bn:nb,en:ne,a:areaKeyFor(abn,i,aen),t:typeFor(ty),ab:ab||ae,ae:ae||ab,addr:(ab+' '+ae).trim()};
+  var it={id:'ur'+i,f:(/durga|দুর্গা/i.test(pj)?'durga':'kali'),bn:nb,en:ne,a:areaKeyFor(abn,i,aen),t:typeFor(ty),ab:ab||ae,ae:ae||ab,addr:(ab+' '+ae).trim()};
   if(gm.indexOf('https://')===0)it.gm=gm.slice(0,400);
   if(la>20&&la<27&&lo>88&&lo<93){it.lat=la;it.lng=lo}
   out.push(it)});
