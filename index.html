@@ -433,6 +433,7 @@ body{margin:0}
 
 <div class="sheet" id="sheet" hidden>
   <form id="addForm">
+    <button type="button" class="back" id="fBack">←</button>
     <h2 id="fTitle"></h2>
     <div class="field"><label for="fName" id="lfName"></label><input class="inp" id="fName" required></div>
     <div class="field"><label for="fArea" id="lfArea"></label><select class="inp" id="fArea"></select></div>
@@ -504,12 +505,12 @@ var SEED_AREAS=['shakhari','tanti','banglabazar','lakshmi','sutrapur','wari','pu
 
 /* t: mandir | mahashmashan (Kali temples) ; sangha | para (Kali mandaps, added by people) ; sarbojanin (Durga) */
 var PUJAS=[
- {id:'k1',f:'kali',bn:'ঢাকেশ্বরী জাতীয় মন্দির',en:'Dhakeshwari National Temple',a:'dhakeshwari',t:'mandir',
+ {id:'k1',f:'kali',q:'Dhakeshwari National Temple, Dhaka',bn:'ঢাকেশ্বরী জাতীয় মন্দির',en:'Dhakeshwari National Temple',a:'dhakeshwari',t:'mandir',
   ab:'ঢাকেশ্বরী রোড, বকশীবাজার, পুরান ঢাকা, ঢাকা–১২১১, বাংলাদেশ',ae:'Dhakeshwari Road, Bakshi Bazar, Old Dhaka 1211, Bangladesh'},
  {id:'k2',f:'kali',q:'Ramna Kali Mandir, Ramna, Dhaka',bn:'রমনা কালী মন্দির',en:'Ramna Kali Temple',a:'ramna',t:'mandir',
   ab:'৯–১০, পুরাতন ময়মনসিংহ রোড, কাজী নজরুল ইসলাম অ্যাভিনিউ, ঢাকা–১০০০, বাংলাদেশ (রমনা পার্কের দক্ষিণে, বাংলা একাডেমির বিপরীতে)',ae:'9–10, Old Mymensingh Road, Kazi Nazrul Islam Avenue, Dhaka 1000, Bangladesh (south of Ramna Park, opposite Bangla Academy)'},
  {id:'k3',f:'kali',q:'Siddheswari Kali Mandir, Siddheswari Lane, Dhaka',bn:'শ্রী শ্রী সিদ্ধেশ্বরী কালী মন্দির',en:'Sri Sri Siddheswari Kali Mandir',a:'siddheshwari',t:'mandir',
-  ab:'সিদ্ধেশ্বরী লেন, মৌচাক মার্কেটের কাছে, সিদ্ধেশ্বরী, ঢাকা–১২১৭, বাংলাদেশ',ae:'Siddheswari Lane, near Mouchak Market, Siddheswari, Dhaka 1217, Bangladesh'},
+  ab:'১৪, সিদ্ধেশ্বরী লেন, মৌচাক মার্কেটের কাছে, ঢাকা–১২১৭, বাংলাদেশ',ae:'14 Siddheshwari Lane, Near Mouchak Market, Dhaka 1217, Bangladesh'},
  {id:'k4',f:'kali',q:'Shaheenbag Sarbojanin Puja Mandir, Tejgaon, Dhaka',bn:'শাহীনবাগ সার্বজনীন পূজা মন্দির',en:'Shaheenbag Sarbojanin Puja Mandir',a:'shahinbagh',t:'mandir',
   ab:'শাহীনবাগ, তেজগাঁও, ঢাকা–১২১৫, বাংলাদেশ (সিভিল এভিয়েশন স্কুলের কাছে)',ae:'Shaheenbag, Tejgaon, Dhaka 1215, Bangladesh (near Civil Aviation School)'},
  {id:'k5',f:'kali',q:'CAAB Sarbojonin Durga Temple, Civil Aviation Colony, Dhaka',bn:'সিএএবি সার্বজনীন দুর্গা মন্দির',en:'CAAB Sarbojonin Durga Temple',a:'caab',t:'mandir',
@@ -522,36 +523,36 @@ var PUJAS=[
   ab:'৫৮, শাঁখারীবাজার রোড, পুরান ঢাকা–১১০০, বাংলাদেশ',ae:'58, Shankhari Bazar Road, Old Dhaka 1100, Bangladesh'},
  {id:'k9',f:'kali',q:'Joy Kali Mandir, Joy Kali Mandir Street, Wari, Dhaka',bn:'জয় কালী মন্দির',en:'Joy Kali Mandir',a:'wari',t:'mandir',
   ab:'২৪, জয় কালী মন্দির স্ট্রিট, ওয়ারী, ঢাকা–১২০৫, বাংলাদেশ',ae:'24, Joy Kali Mandir Street, Wari, Dhaka 1205, Bangladesh'},
- {id:'k10',f:'kali',bn:'রামকৃষ্ণ মঠ ও রামকৃষ্ণ মিশন, ঢাকা',en:'Ramakrishna Math and Ramakrishna Mission, Dhaka',a:'ramakrishna',t:'mandir',
+ {id:'k10',f:'kali',q:'Ramakrishna Math and Mission, Dhaka',bn:'রামকৃষ্ণ মঠ ও রামকৃষ্ণ মিশন, ঢাকা',en:'Ramakrishna Math and Ramakrishna Mission, Dhaka',a:'ramakrishna',t:'mandir',
   ab:'২৭, রামকৃষ্ণ মিশন রোড, ঢাকা–১২০৩, বাংলাদেশ',ae:'27, Ramakrishna Mission Road, Dhaka 1203, Bangladesh'},
- {id:'d1',f:'durga',bn:'ঢাকেশ্বরী জাতীয় মন্দির',en:'Dhakeshwari National Temple',a:'dhakeshwari',t:'mandir',
+ {id:'d1',f:'durga',q:'Dhakeshwari National Temple, Dhaka',bn:'ঢাকেশ্বরী জাতীয় মন্দির',en:'Dhakeshwari National Temple',a:'dhakeshwari',t:'mandir',
   ab:'ঢাকেশ্বরী রোড, বকশীবাজার, পুরান ঢাকা, ঢাকা–১২১১, বাংলাদেশ। দেশের সবচেয়ে বড় দুর্গাপূজা এখানে হয়',ae:'Dhakeshwari Road, Bakshi Bazar, Old Dhaka 1211, Bangladesh। Home of the country’s largest Durga Puja'},
  {id:'d2',f:'durga',q:'Ramna Kali Mandir, Ramna, Dhaka',bn:'রমনা কালী মন্দির',en:'Ramna Kali Mandir',a:'ramna',t:'mandir',
   ab:'৯–১০, পুরাতন ময়মনসিংহ রোড, কাজী নজরুল ইসলাম অ্যাভিনিউ, ঢাকা–১০০০, বাংলাদেশ (রমনা পার্কের দক্ষিণে, বাংলা একাডেমির বিপরীতে)',ae:'9–10, Old Mymensingh Road, Kazi Nazrul Islam Avenue, Dhaka 1000, Bangladesh (south of Ramna Park, opposite Bangla Academy)'},
- {id:'d3',f:'durga',bn:'জগন্নাথ হল (শিব মন্দির)',en:'Jagannath Hall (Shiv Mandir)',a:'jagannath',t:'sarbojanin',
+ {id:'d3',f:'durga',q:'Jagannath Hall Shiv Mandir, University of Dhaka, Dhaka',bn:'জগন্নাথ হল (শিব মন্দির)',en:'Jagannath Hall (Shiv Mandir)',a:'jagannath',t:'sarbojanin',
   ab:'ঢাকা বিশ্ববিদ্যালয় ক্যাম্পাসে, জগন্নাথ হলের শিব মন্দির ও পুকুরের পাশে',ae:'On the University of Dhaka campus, Jagannath Hall Shiv Mandir beside the pond'},
- {id:'d4',f:'durga',bn:'রামকৃষ্ণ মিশন',en:'Ramakrishna Mission',a:'ramakrishna',t:'mandir',
+ {id:'d4',f:'durga',q:'Ramakrishna Math and Mission, Dhaka',bn:'রামকৃষ্ণ মিশন',en:'Ramakrishna Mission',a:'ramakrishna',t:'mandir',
   ab:'২৭, রামকৃষ্ণ মিশন রোড, ঢাকা–১২০৩, বাংলাদেশ',ae:'27, Ramakrishna Mission Road, Dhaka 1203, Bangladesh'},
- {id:'d5',f:'durga',bn:'শাঁখারি বাজার পূজা মণ্ডপ',en:'Shakhari Bazar Puja Mandap',a:'shakhari',t:'sarbojanin',
+ {id:'d5',f:'durga',q:'Shakhari Bazar, Old Dhaka',bn:'শাঁখারি বাজার পূজা মণ্ডপ',en:'Shakhari Bazar Puja Mandap',a:'shakhari',t:'sarbojanin',
   ab:'পুরান ঢাকার শাঁখারি বাজারের সরু গলির ভেতরে, একাধিক মণ্ডপ',ae:'Inside the narrow lanes of Shakhari Bazar, Old Dhaka, with several mandaps'},
- {id:'d6',f:'durga',bn:'তাঁতি বাজার পূজা মণ্ডপ',en:'Tanti Bazar Puja Mandap',a:'tanti',t:'sarbojanin',
+ {id:'d6',f:'durga',q:'Tanti Bazar, Old Dhaka',bn:'তাঁতি বাজার পূজা মণ্ডপ',en:'Tanti Bazar Puja Mandap',a:'tanti',t:'sarbojanin',
   ab:'পুরান ঢাকার তাঁতি বাজারের গলিতে, একাধিক মণ্ডপ',ae:'In the lanes of Tanti Bazar, Old Dhaka, with several mandaps'},
- {id:'d7',f:'durga',bn:'বনানী পূজা মণ্ডপ',en:'Banani Puja Mandap',a:'banani',t:'sarbojanin',
+ {id:'d7',f:'durga',q:'Banani Playground, Kemal Ataturk Avenue, Dhaka',bn:'বনানী পূজা মণ্ডপ',en:'Banani Puja Mandap',a:'banani',t:'sarbojanin',
   ab:'বনানী খেলার মাঠে, কামাল আতাতুর্ক অ্যাভিনিউর পাশে। গুলশান-বনানী সার্বজনীন পূজা ফাউন্ডেশনের অস্থায়ী মণ্ডপ',ae:'At the Banani playground off Kemal Ataturk Avenue. Temporary mandap of the Gulshan-Banani Sarbojanin Puja Foundation'},
- {id:'d8',f:'durga',bn:'কলাবাগান পূজা মণ্ডপ',en:'Kalabagan Puja Mandap',a:'kalabagan',t:'sarbojanin',
-  ab:'কলাবাগান এলাকা। নির্দিষ্ট স্থান যাচাই বাকি',ae:'Kalabagan area. Exact spot not yet verified'},
- {id:'d9',f:'durga',bn:'ধানমন্ডি সার্বজনীন দুর্গাপূজা মণ্ডপ',en:'Dhanmondi Sarbojanin Durga Puja',a:'dhanmondi',t:'sarbojanin',
+ {id:'d9',f:'durga',q:'Green Staff Quarter Field, Dhanmondi, Dhaka',bn:'ধানমন্ডি সার্বজনীন দুর্গাপূজা মণ্ডপ',en:'Dhanmondi Sarbojanin Durga Puja',a:'dhanmondi',t:'sarbojanin',
   ab:'গ্রিন স্টাফ কোয়ার্টার মাঠ, ধানমন্ডি লেকের কাছে',ae:'Green Staff Quarter Field, near Dhanmondi Lake'},
- {id:'d10',f:'durga',bn:'কৃষিবিদ ইনস্টিটিউট সমাজকল্যাণ সমিতি',en:'Krishibid Institute Social Welfare Association',a:'khamarbari',t:'sarbojanin',
+ {id:'d10',f:'durga',q:'Krishibid Institution Bangladesh, Khamarbari, Dhaka',bn:'কৃষিবিদ ইনস্টিটিউট সমাজকল্যাণ সমিতি',en:'Krishibid Institute Social Welfare Association',a:'khamarbari',t:'sarbojanin',
   ab:'খামারবাড়ি, কৃষিবিদ ইনস্টিটিউশন বাংলাদেশ (কেআইবি) ভবনের পাশে',ae:'Khamarbari, beside Krishibid Institution Bangladesh (KIB)'},
- {id:'d11',f:'durga',bn:'মহাখালী সার্বজনীন',en:'Mohakhali Sarbojanin',a:'mohakhali',t:'sarbojanin'},
- {id:'d12',f:'durga',bn:'উত্তরা সার্বজনীন',en:'Uttara Sarbojanin',a:'uttara',t:'sarbojanin'},
+ {id:'d12',f:'durga',bn:'উত্তরা সার্বজনীন পূজা কমিটি',en:'Uttara Sarbojonin Puja Committee',a:'uttara',t:'sarbojanin',
+  ab:'উত্তরা, ঢাকা–১২৩০। অস্থায়ী মণ্ডপ, স্থান প্রতি বছর বদলায় (গত কয়েক বছরে সেক্টর ১১, ১৩ ও ৭-এর মুগ্ধ চত্বর)। এ বছরের সঠিক স্থান যাচাই বাকি',ae:'Uttara, Dhaka 1230. Temporary mandap whose venue changes every year (Sectors 11, 13 and 7 Mugdho Chattar in recent years). This year’s exact spot is not yet verified'},
  {id:'d13',f:'durga',q:'Shaheenbag Sarbojanin Puja Mandir, Tejgaon, Dhaka',bn:'শাহিনবাগ সার্বজনীন',en:'Shahinbagh Sarbojanin',a:'shahinbagh',t:'sarbojanin',
   ab:'শাহীনবাগ, তেজগাঁও, ঢাকা–১২১৫, বাংলাদেশ (সিভিল এভিয়েশন স্কুলের কাছে)',ae:'Shaheenbag, Tejgaon, Dhaka 1215, Bangladesh (near Civil Aviation School)'},
- {id:'d14',f:'durga',bn:'কাওলা সার্বজনীন',en:'Kawla Sarbojanin',a:'kawla',t:'sarbojanin'},
+ {id:'d14',f:'durga',q:'CAAB Sarbojonin Durga Temple, Civil Aviation Colony, Dhaka',bn:'সিএএবি সার্বজনীন দুর্গা মন্দির (কাওলা)',en:'CAAB Sarbojonin Durga Temple (Kawla)',a:'caab',t:'mandir',
+  ab:'সিভিল এভিয়েশন কোয়ার্টার (CAAB কলোনি), কাওলা, ওয়ার্ড–৪৯, ঢাকা উত্তর সিটি কর্পোরেশন, ঢাকা–১২৩০, বাংলাদেশ',ae:'Civil Aviation Quarter (CAAB Colony), Kawla, Ward 49, Dhaka North City Corporation, Dhaka 1230, Bangladesh'},
  {id:'d15',f:'durga',q:'Siddheswari Kali Mandir, Siddheswari Lane, Dhaka',bn:'সিদ্ধেশ্বরী কালী মন্দির',en:'Siddheshwari Kali Mandir',a:'siddheshwari',t:'mandir',
-  ab:'সিদ্ধেশ্বরী লেন, মৌচাক মার্কেটের কাছে, সিদ্ধেশ্বরী, ঢাকা–১২১৭, বাংলাদেশ',ae:'Siddheswari Lane, near Mouchak Market, Siddheswari, Dhaka 1217, Bangladesh'},
- {id:'d16',f:'durga',bn:'বসুন্ধরা সার্বজনীন',en:'Bashundhara Sarbojanin',a:'bashundhara',t:'sarbojanin'}
+  ab:'১৪, সিদ্ধেশ্বরী লেন, মৌচাক মার্কেটের কাছে, ঢাকা–১২১৭, বাংলাদেশ',ae:'14 Siddheshwari Lane, Near Mouchak Market, Dhaka 1217, Bangladesh'},
+ {id:'d16',f:'durga',q:'Plot-2217, Road-52, Block-I Extension, Bashundhara R/A, Dhaka 1229',bn:'বসুন্ধরা সার্বজনীন পূজা মণ্ডপ',en:'Bashundhara Sarbojonin Puja Mandap',a:'bashundhara',t:'sarbojanin',
+  ab:'প্লট–২২১৭, ব্লক–আই (এক্সটেনশন), রোড–৫২, বসুন্ধরা আ/এ, ঢাকা–১২২৯, বাংলাদেশ',ae:'Plot-2217, Block-I (Ext), Road-52, Bashundhara R/A, Dhaka 1229, Bangladesh'}
 ];
 
 /* 2026 calendar. Dates follow published calendars and may shift by a day. */
@@ -572,7 +573,7 @@ var CAL=[
 var S={
  bn:{name:'পূজা কোথায় দেখব',intro:'ঠিকানা থেকে পথ, পথ থেকে প্রতিমা। এই যাত্রায় আমরা আছি আপনার সাথে।',dev:'Developed by Koushiq Das',geo:'কিছু স্থানের অবস্থান উইকিপিডিয়ার কোঅর্ডিনেট থেকে নেওয়া, বাকিগুলো আনুমানিক।',d27r:'৪ থেকে ৯ অক্টোবর ২০২৭',tag:'ঢাকার পূজা, আপনার কাছেই',kali:'কালী পূজা',durga:'দুর্গাপূজা',cal:'উৎসব ক্যালেন্ডার',
   search:'পূজা খুঁজুন',searchPh:'মন্দির বা এলাকার নাম লিখুন',where:'আপনি এখন কোথায়?',wherePh:'এলাকার নাম, যেমন শাহিনবাগ',
-  live:'লাইভ লোকেশন',liveFail:'এই ডেমোতে লাইভ লোকেশন চালু নেই। এলাকার নাম লিখে দিন।',
+  live:'লাইভ লোকেশন',liveFail:'লোকেশন পাওয়া যায়নি। এলাকার নাম লিখে দিন।',liveWait:'আপনার অবস্থান খোঁজা হচ্ছে...',liveDenied:'লোকেশনের অনুমতি দেওয়া হয়নি। ব্রাউজারের সাইট সেটিংসে লোকেশন Allow করুন, অথবা এলাকার নাম লিখুন।',liveTime:'অবস্থান ধরতে বেশি সময় লাগছে। খোলা জায়গায় গিয়ে আবার চেষ্টা করুন, অথবা এলাকার নাম লিখুন।',liveSecure:'লাইভ লোকেশনের জন্য নিরাপদ (HTTPS) লিংকে খুলতে হবে। এলাকার নাম লিখে দিন।',
   youAre:'আপনার অবস্থান',exHint:'উদাহরণ হিসেবে বসানো, আপনার এলাকা লিখে বদলান।',unknownArea:'এই নামের এলাকা তালিকায় নেই।',
   daysLeft:'দিন বাকি',uD:'দিন',uH:'ঘণ্টা',uM:'মিনিট',uS:'সেকেন্ড',diyaNote:'প্রতিদিন একটা করে প্রদীপ জ্বলছে',d27end:'দুর্গাপূজা ২০২৭ শুরু হয়ে গেছে',upLabel:'আসন্ন উৎসব',yearEnd:'২০২৬ এর সব উৎসব শেষ। ২০২৭ এর উৎসব শীঘ্রই যোগ হবে।',kaliToday:'আজ কালী পূজা',kaliOver:'এ বছরের কালী পূজা শেষ',kaliDate:'৮ নভেম্বর ২০২৬, রবিবার',
   d27:'দুর্গাপূজা ২০২৭',d27a:'মহানবমী',d27b:'বিজয়া দশমী',d27exp:'প্রত্যাশিত',
@@ -601,7 +602,7 @@ var S={
   cancel:'বাতিল',submit:'জমা দিন',added:'জমা হয়েছে। অনুমোদনের অপেক্ষায়।'},
  en:{name:'Puja Kothay Dekhbo',intro:'From the right address to the perfect route, we\'re with you all the way to the celebration.',dev:'Developed by Koushiq Das',geo:'Some positions come from Wikipedia coordinates, the rest are approximate.',d27r:'4 to 9 October 2027',tag:'Dhaka pujas, near you',kali:'Kali Puja',durga:'Durga Puja',cal:'Festival Calendar',
   search:'Find a puja',searchPh:'Type a temple or area name',where:'Where are you now?',wherePh:'Area name, e.g. Shahinbagh',
-  live:'Live location',liveFail:'Live location is off in this demo. Type your area instead.',
+  live:'Live location',liveFail:'Could not get your location. Type your area instead.',liveWait:'Finding your location...',liveDenied:'Location permission was not given. Allow location in your browser’s site settings, or type your area.',liveTime:'Taking too long to get a fix. Try again in an open area, or type your area.',liveSecure:'Live location needs a secure (HTTPS) link. Type your area instead.',
   youAre:'Your location',exHint:'Placed as an example. Type your own area to change it.',unknownArea:'That area is not in the list.',
   daysLeft:'days to go',uD:'Days',uH:'Hours',uM:'Min',uS:'Sec',diyaNote:'One more diya lights up every day',d27end:'Durga Puja 2027 has begun',upLabel:'Upcoming',yearEnd:'All 2026 festivals are done. The 2027 festivals will be added soon.',kaliToday:'Kali Puja is today',kaliOver:'This year’s Kali Puja is over',kaliDate:'Sunday, 8 November 2026',
   d27:'Durga Puja 2027',d27a:'Maha Navami',d27b:'Bijoya Dashami',d27exp:'expected',
@@ -657,12 +658,15 @@ function dayDiff(arr){return Math.round((new Date(arr[0],arr[1],arr[2])-today0()
 function fmt(a,wd){var d=new Date(a[0],a[1],a[2]);return n(a[2])+' '+MON[st.lang][a[1]]+(wd===false?'':(' '+n(a[0])+(st.lang==='bn'?', ':', ')+WD[st.lang][d.getDay()]))}
 function fmtRange(s,e){if(!e)return fmt(s);if(s[1]===e[1])return n(s[2])+'–'+n(e[2])+' '+MON[st.lang][s[1]]+' '+n(s[0]);return fmt(s,false)+' – '+fmt(e,false)+' '+n(e[0])}
 function addrOf(p){return st.lang==='bn'?(p.ab||''):(p.ae||'')}
+function placeQuery(p){return p.q||(p.en+', '+AREA[p.a].en+', Dhaka')}
 function mapsLink(p){
  if(p.gm)return p.gm;
- var a=AREA[p.a];
- if(a.v)return 'https://www.google.com/maps/search/?api=1&query='+a.lat+','+a.lng;
- var q=p.q||(p.en+(p.ae?' '+p.ae:(p.addr?' '+p.addr:''))+' Dhaka');
- return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q)}
+ return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(placeQuery(p))}
+function dirLink(p){
+ if(p.gm)return p.gm;
+ var o='';
+ if(st.user&&st.user.k&&AREA[st.user.k])o='&origin='+encodeURIComponent(AREA[st.user.k].en+', Dhaka');
+ return 'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(placeQuery(p))+o}
 function matches(p,q){var a=AREA[p.a];return (p.bn+' '+p.en+' '+a.bn+' '+a.en+' '+(p.addr||'')).toLowerCase().indexOf(q)>-1}
 function byDist(arr,get){if(!st.user)return arr;return arr.map(function(x){return{x:x,d:get(x)}}).sort(function(p,q){return p.d-q.d}).map(function(o){return o.x})}
 
@@ -777,7 +781,7 @@ var ICON_DIR='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="cu
 var ICON_NEAR='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M7.8 7.8a6 6 0 0 0 0 8.4M16.2 7.8a6 6 0 0 1 0 8.4M4.9 4.9a10 10 0 0 0 0 14.2M19.1 4.9a10 10 0 0 1 0 14.2"/></svg>';
 function nearOf(p){var a=AREA[p.a];return all().filter(function(q){return q.id!==p.id&&q.f===p.f&&(p.f!=='kali'||kindOf(q)==='temple'||inMA(q.a))}).map(function(q){var b=AREA[q.a];return{p:q,d:haversine(a.lat,a.lng,b.lat,b.lng)}}).sort(function(x,y){return x.d-y.d}).slice(0,3)}
 function detailHTML(p){
- var t=T(),a=AREA[p.a],ad=addrOf(p)||p.addr||'',link=mapsLink(p),o='<div class="detail">';
+ var t=T(),a=AREA[p.a],ad=addrOf(p)||p.addr||'',link=dirLink(p),o='<div class="detail">';
  var tp=kindOf(p)==='temple';
  o+='<div><div class="k">'+t.addr+'</div>'+(tp&&ad?esc(ad):esc(nameOf(a))+(ad?' · '+esc(ad):''))+'</div>';
  o+='<div class="hint">'+(a.v&&!p.gm?t.locV:t.locA)+'</div>';
@@ -945,7 +949,7 @@ function renderStatic(){
  $('whereHint').textContent=st.user&&st.user.example?t.exHint:'';
  var vt=$('viewtoggle').children;vt[0].textContent=t.list;vt[1].textContent=t.map;
  $('demoNote').textContent=t.dev;$('geoNote').textContent=t.geo;$('fab').textContent=st.fest==='kali'?t.addMandap:t.add;
- $('fTitle').textContent=t.fTitle;$('lfName').textContent=t.fName;$('lfArea').textContent=t.fArea;$('lfAddr').textContent=t.fAddr;$('lfType').textContent=t.fType;
+ $('fBack').setAttribute('aria-label',t.back);$('fTitle').textContent=t.fTitle;$('lfName').textContent=t.fName;$('lfArea').textContent=t.fArea;$('lfAddr').textContent=t.fAddr;$('lfType').textContent=t.fType;
  $('lfLink').textContent=t.fLink;$('fLinkHint').textContent=t.fLinkHint;
  $('fNote').textContent=t.fNote;$('fCancel').textContent=t.cancel;$('fSubmit').textContent=t.submit;
  var cur=$('fArea').value;
@@ -980,8 +984,8 @@ $('list').addEventListener('click',function(e){
  var nr=e.target.closest('button[data-near]');
  if(nr){st.near=st.near===nr.dataset.near?null:nr.dataset.near;renderList();return}
  var op=e.target.closest('button[data-open]');
- if(op){st.area=op.dataset.open;st.sel=null;try{history.pushState({a:1},'')}catch(x){}renderList();window.scrollTo(0,0);return}
- if(e.target.closest('button[data-back]')){st.area=null;st.sel=null;renderList();return}
+ if(op){st.areaY=window.pageYOffset||document.documentElement.scrollTop||0;st.area=op.dataset.open;st.sel=null;try{history.pushState({a:1},'')}catch(x){}renderList();window.scrollTo(0,0);return}
+ if(e.target.closest('button[data-back]')){st.area=null;st.sel=null;renderList();restoreY();return}
  var cp=e.target.closest('button[data-copy]');
  if(cp){var p=all().filter(function(x){return x.id===cp.dataset.copy})[0];if(p)copyText(mapsLink(p),cp);return}
  var ad=e.target.closest('button[data-addarea]');
@@ -998,15 +1002,19 @@ $('where').addEventListener('input',function(e){
  if(m){st.user={k:m.k,lat:m.lat,lng:m.lng};$('whereHint').textContent=T().youAre+': '+nameOf(m);renderList();renderMap()}
  else{$('whereHint').textContent=T().unknownArea}});
 $('live').addEventListener('click',function(){
- var fail=function(){$('whereHint').textContent=T().liveFail};
+ var t=T(),hint=$('whereHint');
+ var fail=function(err){var m=t.liveFail;if(err&&err.code===1)m=t.liveDenied;else if(err&&err.code===3)m=t.liveTime;hint.textContent=m};
  if(!navigator.geolocation){fail();return}
- try{navigator.geolocation.getCurrentPosition(function(p){var la=p.coords.latitude,lo=p.coords.longitude;if(la<23.6||la>23.99||lo<90.25||lo>90.6){st.user=null;$('where').value='';$('whereHint').textContent=st.lang==='bn'?'আপনি ঢাকার বাইরে আছেন। এলাকা লিখে খুঁজুন।':'You appear to be outside Dhaka. Type an area instead.';renderList();renderMap();return}st.user={k:null,lat:la,lng:lo};$('where').value=T().youAre;$('whereHint').textContent='';renderList();renderMap()},fail,{timeout:6000})}catch(e){fail()}});
+ if(window.isSecureContext===false){hint.textContent=t.liveSecure;return}
+ hint.textContent=t.liveWait;
+ try{navigator.geolocation.getCurrentPosition(function(p){var la=p.coords.latitude,lo=p.coords.longitude;if(la<23.6||la>23.99||lo<90.25||lo>90.6){st.user=null;$('where').value='';$('whereHint').textContent=st.lang==='bn'?'আপনি ঢাকার বাইরে আছেন। এলাকা লিখে খুঁজুন।':'You appear to be outside Dhaka. Type an area instead.';renderList();renderMap();return}st.user={k:null,lat:la,lng:lo};$('where').value=T().youAre;$('whereHint').textContent='';renderList();renderMap()},fail,{enableHighAccuracy:true,timeout:15000,maximumAge:0})}catch(e){fail()}});
 $('brand').addEventListener('click',playSplash);
 
 function toast(msg){var el=$('toast');el.textContent=msg;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){el.hidden=true},3200)}
 function openSheet(areaKey){fillTypes();if(areaKey&&AREA[areaKey])$('fArea').value=areaKey;$('sheet').hidden=false;$('fName').focus()}
 $('fab').addEventListener('click',function(){openSheet('')});
 $('fCancel').addEventListener('click',function(){$('sheet').hidden=true});
+$('fBack').addEventListener('click',function(){$('sheet').hidden=true});
 $('sheet').addEventListener('click',function(e){if(e.target===$('sheet'))$('sheet').hidden=true});
 $('addForm').addEventListener('submit',function(e){
  e.preventDefault();
@@ -1020,7 +1028,8 @@ $('addForm').addEventListener('submit',function(e){
  renderAll();toast(T().added)});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){$('sheet').hidden=true;if(!$('splash').hidden)closeSplash()}});
 
-window.addEventListener('popstate',function(){if(st.area){st.area=null;st.sel=null;renderList()}});
+function restoreY(){var y=st.areaY||0;window.scrollTo(0,y);if(window.requestAnimationFrame)requestAnimationFrame(function(){window.scrollTo(0,y)})}
+window.addEventListener('popstate',function(){if(st.area){st.area=null;st.sel=null;renderList();restoreY()}});
 renderAll();playSplash();
 })();
 </script>
