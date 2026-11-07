@@ -1018,11 +1018,11 @@ function parseCSV(txt){
  if(cur!==''||row.length){row.push(cur);rows.push(row)}
  return rows}
 function normTxt(x){return String(x||'').toLowerCase().replace(/[\s\u0981\u09BC.,\-\/]+/g,'').replace(/\u09C0/g,'\u09BF').replace(/\u09C2/g,'\u09C1').replace(/\u09B6|\u09B7/g,'\u09B8').replace(/bazaar|bajar|bajaar/g,'bazar').replace(/tanti|tanthi|tonti/g,'tanti').replace(/shakhari|sankhari|shankhari|sakhari/g,'shakhari')}
-function areaKeyFor(text,idx){
- var v=normTxt(text),best=null,bl=0;
+function areaKeyFor(text,idx,textEn){
+ var v=normTxt(text+' '+(textEn||'')),best=null,bl=0;
  Object.keys(AREA).forEach(function(k){var a=AREA[k];[a.bn,a.en].forEach(function(nm){var m=normTxt(nm);if(m.length>=3&&v.indexOf(m)>-1&&m.length>bl){best=k;bl=m.length}})});
  if(best)return best;
- var key='x_'+idx;AREA[key]={k:key,bn:String(text||'').slice(0,60)||'অন্যান্য',en:String(text||'').slice(0,60)||'Other'};return key}
+ var key='x_'+idx,b=String(text||'').slice(0,60),e=String(textEn||'').slice(0,60);AREA[key]={k:key,bn:b||e||'অন্যান্য',en:e||b||'Other'};return key}
 function typeFor(text){
  var v=String(text||'').toLowerCase();
  if(v.indexOf('শ্মশান')>-1||v.indexOf('shmashan')>-1)return 'mahashmashan';
@@ -1032,11 +1032,14 @@ function typeFor(text){
  return 'sarbojanin'}
 function clip(x){return String(x||'').replace(/[<>]/g,'').trim().slice(0,140)}
 function remoteFromCSV(txt){
- var rows=parseCSV(txt),out=[];
+ var rows=parseCSV(txt),out=[],nw=rows.length&&rows[0].length>=10;
  rows.slice(1).forEach(function(r,i){
-  var nm=clip(r[0]);if(!nm)return;
-  var gm=String(r[4]||'').trim(),la=parseFloat(r[5]),lo=parseFloat(r[6]);
-  var it={id:'ur'+i,f:'kali',bn:nm,en:nm,a:areaKeyFor(r[1],i),t:typeFor(r[3]),addr:clip(r[2])};
+  var nb,ne,abn,aen,ab,ae,ty,gm,la,lo;
+  if(nw){nb=clip(r[0]);ne=clip(r[1]);abn=r[2];aen=r[3];ab=clip(r[4]);ae=clip(r[5]);ty=r[6];gm=r[7];la=r[8];lo=r[9]}
+  else{nb=clip(r[0]);ne=nb;abn=r[1];aen='';ab=clip(r[2]);ae=ab;ty=r[3];gm=r[4];la=r[5];lo=r[6]}
+  nb=nb||ne;ne=ne||nb;if(!nb)return;
+  gm=String(gm||'').trim();la=parseFloat(la);lo=parseFloat(lo);
+  var it={id:'ur'+i,f:'kali',bn:nb,en:ne,a:areaKeyFor(abn,i,aen),t:typeFor(ty),ab:ab||ae,ae:ae||ab,addr:(ab+' '+ae).trim()};
   if(gm.indexOf('https://')===0)it.gm=gm.slice(0,400);
   if(la>20&&la<27&&lo>88&&lo<93){it.lat=la;it.lng=lo}
   out.push(it)});
