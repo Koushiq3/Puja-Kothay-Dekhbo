@@ -150,6 +150,9 @@ button{cursor:pointer}
 .c-dist{font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent);white-space:nowrap;text-align:right}
 .c-dist small{display:block;color:var(--muted);font-weight:400;font-size:.72rem}
 .gnum{font-family:var(--font-display);font-size:1.9rem;line-height:1;color:var(--accent);font-weight:400;display:block}
+.kinds[hidden]{display:none!important}
+.stack[hidden]{display:none!important}
+.gnum{font-family:'Noto Sans Bengali','Hind Siliguri',system-ui,sans-serif;font-weight:700;font-size:1.65rem;letter-spacing:0}
 .detail{margin:-4px 0 0;padding:12px 14px;border:1px solid var(--line);border-top:0;border-radius:0 0 12px 12px;background:var(--surface2);display:flex;flex-direction:column;gap:8px;font-size:.92rem}
 .detail .k{color:var(--muted);font-size:.78rem;font-weight:600;letter-spacing:.02em}
 .detail a{color:var(--accent);font-weight:600}
@@ -314,7 +317,14 @@ button{cursor:pointer}
 }
 
 /* rakher upobash panel */
-.tl li.rk{flex-wrap:wrap;cursor:pointer}
+.tl li.rk,.tl li.kp{flex-wrap:wrap;cursor:pointer}
+.tl li.kp.open .rk-ic{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.kp-times{display:flex;gap:10px;justify-content:center;width:100%;margin:2px 0 4px}
+.kp-t{flex:1;max-width:190px;border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:var(--surface2)}
+.kp-t small{display:block;font-size:.78rem;color:var(--muted);font-weight:600}
+.kp-t b{display:block;margin-top:2px;font-family:'Noto Sans Bengali','Hind Siliguri',system-ui,sans-serif;font-size:1.2rem;font-weight:700;color:var(--accent);line-height:1.25;font-variant-numeric:lining-nums tabular-nums}
+.kp-t em{display:block;font-style:normal;font-size:.76rem;color:var(--muted)}
+.kp-sub{font-size:.8rem;color:var(--muted);margin-top:-2px}
 .rk-ic{display:inline-grid;place-items:center;width:26px;height:26px;margin-left:8px;vertical-align:-6px;border-radius:8px;border:1px solid var(--line);background:var(--surface2);color:var(--accent);padding:0}
 .rk-ic svg{width:15px;height:15px}
 .tl li.rk.open .rk-ic{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
@@ -754,7 +764,7 @@ function renderCount(){
   st.lit=litCount(ms);var row='';
   for(var i=0;i<TOTAL_DIYAS;i++)row+=diyaSvg(i<st.lit,i);
   if(!ended)html='<div class="cd-label">'+t.kali+'</div><div class="cd-date">'+t.kaliDate+'</div>'+cdHTML(p,ms)+'<div class="diyas">'+row+'</div>';
-  else html='<div class="cd-label">'+(Date.now()<TARGETS.kali+864e5?t.kaliToday:t.kaliOver)+'</div><div class="diyas">'+row+'</div>';
+  else{var tdy=Date.now()<TARGETS.kali+864e5+10*6e4;html='<div class="cd-label">'+(tdy?t.kaliToday:t.kaliOver)+'</div>'+(tdy?kpBoxes():'')+'<div class="diyas">'+row+'</div>'}
  }else{
   var NAV=[2027,9,8],chips=t.dd.map(function(x){return '<span>'+x+'</span>'}).join('');
   if(!ended)html='<div class="cd-label">'+t.d27+'</div>'+cdHTML(p,ms)+'<div class="days">'+chips+'</div>';
@@ -787,7 +797,7 @@ function detailHTML(p){
  return o+'</div>'}
 function cardHTML(p,compact){
  var t=T(),a=AREA[p.a],d=dist(p),on=p.id===st.sel,o='';
- o+='<li><button type="button" class="card" data-id="'+esc(p.id)+'" aria-pressed="'+on+'"><span><span class="c-name">'+esc(nameOf(p))+'</span>'+(!SHOW_MANDAP&&p.f==='kali'&&compact?'':'<span class="c-meta">'+(compact?'':'<span>'+esc(nameOf(a))+'</span>')+'<span class="chip">'+t.types[p.t]+'</span>'+(p.pending?'<span class="chip warn">'+t.pending+'</span>':'')+'</span>')+'</span>'+
+ o+='<li><button type="button" class="card" data-id="'+esc(p.id)+'" aria-pressed="'+on+'"><span><span class="c-name">'+esc(nameOf(p))+'</span>'+(!SHOW_MANDAP&&p.f==='kali'&&compact?'<span class="c-meta"><span class="chip">'+t.types[p.t]+'</span>'+(p.pending?'<span class="chip warn">'+t.pending+'</span>':'')+'</span>':'<span class="c-meta">'+(compact?'':'<span>'+esc(nameOf(a))+'</span>')+'<span class="chip">'+t.types[p.t]+'</span>'+(p.pending?'<span class="chip warn">'+t.pending+'</span>':'')+'</span>')+'</span>'+
   '</button>';
  if(on)o+=detailHTML(p);
  return o+'</li>'}
@@ -826,6 +836,7 @@ function renderList(){
  if(st.fest==='durga')out+=addCard();
  ul.innerHTML=out}
 
+function backToRow(){var k=st.backKey;st.backKey=null;if(!k)return;var el=document.querySelector('[data-open="'+k+'"]');if(el&&el.scrollIntoView)el.scrollIntoView({block:'center'})}
 function areaItems(k){return all().filter(function(p){return p.f==='kali'&&p.a===k})}
 function areaMode(on){$('tabs').style.display=on?'none':'';$('count').hidden=on||st.fest==='cal';[].forEach.call(document.querySelectorAll('.controls,.bar,.mapcol,#kinds'),function(x){x.style.display=on?'none':''})}
 function renderKali(){
@@ -909,6 +920,18 @@ var RK={
  bn:{t:'রাখের উপবাস',h:'সারাদিন উপবাস, সন্ধ্যায় প্রদীপের আলো',p:'কার্তিকের শেষ পনেরো দিনে প্রতি মঙ্গল ও শনিবার ভক্তরা সারাদিন উপবাসে থাকেন। সন্ধ্যা নামলে আশ্রম প্রাঙ্গণে জ্বলে ওঠে প্রদীপ আর ধূপ। প্রচলিত বিশ্বাস, রোগব্যাধি থেকে রক্ষা পেতে এই ব্রতের কথা বলেছিলেন বাবা লোকনাথ নিজেই।',a:'কেউ একে বলেন কার্তিক ব্রত, কেউ গোঁসাইর উপবাস, কেউ ঘৃতপ্রদীপ প্রজ্বালন।',n:['১ম','২য়','৩য়','৪র্থ','৫ম'],m:'কার্তিক',today:'আজ',tt:'শ্রী শ্রী লোকনাথ ব্রহ্মচারীর আশ্রম',tp:'বারদী, সোনারগাঁও, নারায়ণগঞ্জ',note:'পঞ্জিকা ও আশ্রম ঘোষিত সময়সূচি অনুযায়ী।',lbl:'রাখের উপবাসের বিস্তারিত',th:'প্রদীপ জ্বালানোর সময়'},
  en:{t:'Rakher Upobash',h:'Fast through the day. Light a lamp at dusk.',p:'Every Tuesday and Saturday in the last fortnight of Kartik, devotees of Lokenath Baba go without food until sunset. Then the ashram courtyard glows with lamps and incense. Tradition says the Baba himself asked his followers to keep this vow, to stay safe from illness.',a:'You may hear it called Kartik Brata, Gosainer Upobash or Ghrita Pradip Prajwalan.',n:['1st','2nd','3rd','4th','5th'],m:'Kartik',today:'Today',tt:'Sri Sri Lokenath Brahmachari Ashram',tp:'Baradi, Sonargaon, Narayanganj',note:'As per the panjika and the schedule announced by the ashram.',lbl:'Rakher Upobash details',th:'Lamp-lighting time'}
 };
+var KP={
+ bn:{t:'কালী পূজা ও দীপাবলি',h:'অমাবস্যার রাতে মায়ের আরাধনা',p:'কালী পূজা হয় কার্তিকের অমাবস্যায়, মধ্যরাতের নিশীথ লগ্নে। এই লগ্নের সময় ঢাকার জন্য দেওয়া হলো।',s:'পূজা শুরু',e:'পূজা শেষ',ts:'অমাবস্যা তিথি শুরু',te:'অমাবস্যা তিথি শেষ',nis:'নিশীথ পূজা',lbl:'কালী পূজার বিস্তারিত',th:'ঢাকার সময় অনুযায়ী',note:'দৃক পঞ্জিকার ঢাকার হিসাব অনুযায়ী। পঞ্জিকাভেদে সময়ে তফাত হতে পারে, তাই মন্দিরের ঘোষণা দেখে নিন।',
+  d1:'৮ নভেম্বর',d2:'৯ নভেম্বর',sT:'রাত ১১:১৬',eT:'রাত ১২:০৮',tsT:'সকাল ১১:৫৭',teT:'দুপুর ১:০১'},
+ en:{t:'Kali Puja & Diwali',h:'A night for the Mother, under the new moon',p:'Kali Puja is held on the new-moon night of Kartik, at the midnight Nishita hour. Times below are for Dhaka.',s:'Puja begins',e:'Puja ends',ts:'Amavasya begins',te:'Amavasya ends',nis:'Nishita puja',lbl:'Kali Puja details',th:'Dhaka time',note:'Based on the Drik Panchang calculation for Dhaka. Panjikas differ, so check your temple’s announcement.',
+  d1:'8 Nov',d2:'9 Nov',sT:'11:16 PM',eT:'12:08 AM',tsT:'11:57 AM',teT:'1:01 PM'}
+};
+function kpBoxes(){var L=KP[st.lang];return '<div class="kp-times"><div class="kp-t"><small>'+L.s+'</small><b>'+L.sT+'</b><em>'+L.d1+'</em></div><div class="kp-t"><small>'+L.e+'</small><b>'+L.eT+'</b><em>'+L.d2+'</em></div></div><div class="kp-sub">'+L.nis+' · '+L.th+'</div>'}
+function kpPanel(){
+ var L=KP[st.lang];
+ var rows=[[L.s,L.nis,L.d1,L.sT],[L.e,L.nis,L.d2,L.eT],[L.ts,'',L.d1,L.tsT],[L.te,'',L.d2,L.teT]].map(function(r){
+  return '<li><span><strong>'+r[0]+'</strong><small>'+(r[1]?r[1]+' · ':'')+r[2]+'</small></span><i class="tm">'+r[3]+'</i></li>'}).join('');
+ return '<div class="rk-panel" id="kpPanel"'+(st.kp?'':' hidden')+'><h3>'+L.t+'</h3><div class="rk-h">'+L.h+'</div><p>'+L.p+'</p><div class="rk-th">'+L.th+'</div><ul class="rk-d">'+rows+'</ul><div class="rk-note">'+L.note+'</div></div>'}
 var RK_ICON='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M10 12h6M10 16h6"/></svg>';
 function rkPanel(){
  var L=RK[st.lang],t=T(),now=new Date(),td=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
@@ -924,8 +947,8 @@ function renderCal(){
  var out='';
  items.forEach(function(i){
   var k=i.s.k,cls=k==='left'?(i===next?'next':'left'):k;
-  var rk=i.c.k==='rash';
-  out+='<li class="'+cls+(rk?' rk'+(st.rk?' open':''):'')+'"><span class="dot">'+(k==='done'?TICK_SVG:'')+'</span><span class="fw">'+festIcon(i.c.k)+'</span><div class="tb"><div class="tl-name">'+esc(nameOf(i.c))+(rk?'<button type="button" class="rk-ic" aria-expanded="'+(!!st.rk)+'" aria-controls="rkPanel" aria-label="'+RK[st.lang].lbl+'">'+RK_ICON+'</button>':'')+'</div><div class="tl-date">'+fmtRange(i.c.s,i.c.e)+'</div></div><span class="status">'+statusText(i.s)+'</span>'+(rk?rkPanel():'')+'</li>'});
+  var rk=i.c.k==='rash',kp=i.c.k==='kali';
+  out+='<li class="'+cls+(rk?' rk'+(st.rk?' open':''):'')+(kp?' kp'+(st.kp?' open':''):'')+'"><span class="dot">'+(k==='done'?TICK_SVG:'')+'</span><span class="fw">'+festIcon(i.c.k)+'</span><div class="tb"><div class="tl-name">'+esc(nameOf(i.c))+(rk?'<button type="button" class="rk-ic" aria-expanded="'+(!!st.rk)+'" aria-controls="rkPanel" aria-label="'+RK[st.lang].lbl+'">'+RK_ICON+'</button>':'')+(kp?'<button type="button" class="rk-ic" aria-expanded="'+(!!st.kp)+'" aria-controls="kpPanel" aria-label="'+KP[st.lang].lbl+'">'+RK_ICON+'</button>':'')+'</div><div class="tl-date">'+fmtRange(i.c.s,i.c.e)+'</div></div><span class="status">'+statusText(i.s)+'</span>'+(rk?rkPanel():'')+(kp?kpPanel():'')+'</li>'});
  $('tl').innerHTML=out;
  }
 
@@ -968,7 +991,7 @@ function copyText(text,btn){
 
 /* ---------- events ---------- */
 $('lang').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;st.lang=b.dataset.l;try{localStorage.setItem('pkd_lang',st.lang)}catch(x){}renderAll()});
-$('calArea').addEventListener('click',function(e){var r=e.target.closest('li.rk');if(r&&!e.target.closest('.rk-panel')){st.rk=!st.rk;r.classList.toggle('open',st.rk);var p=$('rkPanel');if(p)p.hidden=!st.rk;var ib=r.querySelector('.rk-ic');if(ib)ib.setAttribute('aria-expanded',st.rk);return}var b=e.target.closest('button[data-go]');if(!b)return;st.fest=b.dataset.go;st.sel=null;st.selArea=null;st.area=null;st.kind='all';st.q='';$('search').value='';renderAll();window.scrollTo(0,0)});
+$('calArea').addEventListener('click',function(e){var r0=e.target.closest('li.kp');if(r0&&!e.target.closest('.rk-panel')){st.kp=!st.kp;r0.classList.toggle('open',st.kp);var p0=$('kpPanel');if(p0)p0.hidden=!st.kp;var i0=r0.querySelector('.rk-ic');if(i0)i0.setAttribute('aria-expanded',st.kp);return}var r=e.target.closest('li.rk');if(r&&!e.target.closest('.rk-panel')){st.rk=!st.rk;r.classList.toggle('open',st.rk);var p=$('rkPanel');if(p)p.hidden=!st.rk;var ib=r.querySelector('.rk-ic');if(ib)ib.setAttribute('aria-expanded',st.rk);return}var b=e.target.closest('button[data-go]');if(!b)return;st.fest=b.dataset.go;st.sel=null;st.selArea=null;st.area=null;st.kind='all';st.q='';$('search').value='';renderAll();window.scrollTo(0,0)});
 $('tabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;st.fest=b.dataset.f;st.sel=null;st.selArea=null;st.area=null;st.kind='all';st.q='';$('search').value='';renderAll()});
 $('kinds').addEventListener('click',function(e){var b=e.target.closest('button[data-k]');if(!b)return;st.kind=b.dataset.k;st.sel=null;renderKinds();renderList();renderMap()});
 $('search').addEventListener('input',function(e){st.q=e.target.value;renderList();renderMap()});
@@ -980,8 +1003,8 @@ $('list').addEventListener('click',function(e){
  var nr=e.target.closest('button[data-near]');
  if(nr){st.near=st.near===nr.dataset.near?null:nr.dataset.near;renderList();return}
  var op=e.target.closest('button[data-open]');
- if(op){st.area=op.dataset.open;st.sel=null;try{history.pushState({a:1},'')}catch(x){}renderList();window.scrollTo(0,0);return}
- if(e.target.closest('button[data-back]')){st.area=null;st.sel=null;renderList();return}
+ if(op){st.backKey=op.dataset.open;st.area=op.dataset.open;st.sel=null;try{history.pushState({a:1},'')}catch(x){}renderList();window.scrollTo(0,0);return}
+ if(e.target.closest('button[data-back]')){st.area=null;st.sel=null;renderList();backToRow();return}
  var cp=e.target.closest('button[data-copy]');
  if(cp){var p=all().filter(function(x){return x.id===cp.dataset.copy})[0];if(p)copyText(mapsLink(p),cp);return}
  var ad=e.target.closest('button[data-addarea]');
@@ -1072,7 +1095,7 @@ $('addForm').addEventListener('submit',function(e){
  renderAll();toast(T().added)});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){$('sheet').hidden=true;if(!$('splash').hidden)closeSplash()}});
 
-window.addEventListener('popstate',function(){if(st.area){st.area=null;st.sel=null;renderList()}});
+window.addEventListener('popstate',function(){if(st.area){st.area=null;st.sel=null;renderList();backToRow()}});
 renderAll();playSplash();
 })();
 </script>
