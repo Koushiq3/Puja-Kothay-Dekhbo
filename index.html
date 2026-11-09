@@ -334,7 +334,31 @@ button{cursor:pointer}
 }
 
 /* rakher upobash panel */
-.tl li.rk,.tl li.kp{flex-wrap:wrap;cursor:pointer}
+.tl li.rk,.tl li.kp,.tl li.bp{flex-wrap:wrap;cursor:pointer}
+.tl li.bp.open .rk-ic,.bp-ic.open{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tl-name.bpn,.un-name.bpn{display:flex;align-items:center;gap:8px}
+.un-name.bpn{justify-content:center;gap:10px;line-height:1.25}
+.un-name.bpn .rk-ic{width:32px;height:32px;border-radius:10px}
+.un-name.bpn .rk-ic svg{width:18px;height:18px}
+.un-name.bpn .rk-ic{position:relative}
+.bp-ic.shake{transform-origin:50% 15%;animation:bpshake 4s ease-in-out infinite}
+@keyframes bpshake{0%,22%,100%{transform:rotate(0)}3%{transform:rotate(-16deg)}6%{transform:rotate(14deg)}9%{transform:rotate(-11deg)}12%{transform:rotate(8deg)}15%{transform:rotate(-4deg)}18%{transform:rotate(2deg)}}
+.bpn .rk-ic{margin-left:0;vertical-align:baseline;flex:none}
+.bp-panel.up{width:100%;max-width:420px;text-align:left;margin-top:8px}
+.bp-panel.up h3{text-align:center}
+.bp-panel.up .rk-note{text-align:center}
+.rk-panel p.bp-intro{margin:0 0 4px;color:var(--fg);line-height:1.75}
+.bp-sec{display:flex;align-items:center;gap:10px;margin:16px 0 8px;font-family:var(--font-display);font-size:1.02rem;color:var(--accent)}
+.bp-sec::after{content:"";flex:1;border-top:1px dashed var(--line)}
+.bp-chips{display:flex;flex-wrap:wrap;gap:6px}
+.bp-chips span{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 12px;font-size:.88rem;color:var(--fg)}
+.bp-steps{display:flex;flex-direction:column;gap:12px}
+.bp-st{display:flex;gap:10px;align-items:flex-start;line-height:1.65;color:var(--fg)}
+.bp-st>i{width:24px;height:24px;flex:none;margin-top:2px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-style:normal;font-weight:700;font-size:.8rem;display:grid;place-items:center}
+.bp-st>div{flex:1;min-width:0}
+.bp-m{margin-top:8px;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;text-align:center;font-family:var(--font-display);font-size:1.08rem;line-height:1.9;color:var(--fg)}
+.bp-go{display:flex;align-items:center;justify-content:center;width:40px;height:40px;margin:12px auto 0;padding:0;border:0;border-radius:50%;background:var(--accent);color:var(--accent-ink);box-shadow:0 4px 14px var(--glow)}
+.bp-go svg{width:20px;height:20px}
 .tl li.kp.open .rk-ic{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .kp-times{display:flex;gap:10px;justify-content:center;width:100%;margin:2px 0 4px}
 .kp-t{flex:1;max-width:190px;border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:var(--surface2)}
@@ -954,6 +978,39 @@ function kpPanel(){
  var rows=[[L.s,L.nis,L.d1,L.sT],[L.e,L.nis,L.d2,L.eT],[L.ts,'',L.d1,L.tsT],[L.te,'',L.d2,L.teT]].map(function(r){
   return '<li><span><strong>'+r[0]+'</strong><small>'+(r[1]?r[1]+' · ':'')+r[2]+'</small></span><i class="tm">'+r[3]+'</i></li>'}).join('');
  return '<div class="rk-panel" id="kpPanel"'+(st.kp?'':' hidden')+'><h3>'+L.t+'</h3><div class="rk-h">'+L.h+'</div><p>'+L.p+'</p><div class="rk-th">'+L.th+'</div><ul class="rk-d">'+rows+'</ul><div class="rk-note">'+L.note+'</div></div>'}
+var BP={
+ bn:{
+  intro:'ভাইফোঁটা (বা ভ্রাতৃদ্বিতীয়া) হলো ভাই ও বোনের অকৃত্রিম ভালোবাসা, আশীর্বাদ ও দীর্ঘায়ু কামনার একটি ঐতিহ্যবাহী হিন্দু উৎসব। এটি কালীপুজোর ঠিক পরের দিন (কার্তিক মাসের শুক্লপক্ষের দ্বিতীয়া তিথিতে) উদযাপিত হয়।',
+  tithi:'দ্বিতীয়া তিথি',ts:'তিথি শুরু',te:'তিথি শেষ',d1:'১০ নভেম্বর',d2:'১১ নভেম্বর',sT:'দুপুর ২:০২',eT:'দুপুর ৩:৫৪',
+  src:'তথ্যসূত্র: বিশুদ্ধ সিদ্ধান্ত পঞ্জিকা',
+  secT:'তিথি ও সময়',secP:'ফোঁটার থালা',secN:'ফোঁটা দেওয়ার নিয়ম',
+  plate:['খাঁটি চন্দন','দই বা গঙ্গাজল','ধান','দুর্বা','প্রদীপ','ধূপকাঠি','শঙ্খ','৫ বা ৭ রকমের মিষ্টি'],
+  steps:['বোন তাঁর অনামিকা (বা ছোট) আঙুল দিয়ে ভাইয়ের কপালে চন্দনের ফোঁটা দেন।','ফোঁটা দেওয়ার সময় এই ছড়াটি বলা হয়:','এরপর ভাইয়ের মাথায় ধান ও দুর্বা দিয়ে মঙ্গলকামনা করা হয়।','শেষে ভাইকে মিষ্টিমুখ করানো হয় এবং উপহার বিনিময় করা হয়।'],
+  m:['ভাইয়ের কপালে দিলাম ফোঁটা,','যমের দুয়ারে পড়ল কাঁটা।','যমুনা দেয় যমকে ফোঁটা,','আমি দিই আমার ভাইকে ফোঁটা॥','যমুনার হাতে ফোঁটা খেয়ে যম হল অমর,','আমার হাতে ফোঁটা খেয়ে আমার ভাই হোক অমর॥'],
+  lbl:'ভাই ফোঁটার তিথি ও সময়',go:'নিচে ভাই ফোঁটার বিস্তারিত দেখুন'},
+ en:{
+  intro:'Bhai Phota (also called Bhratri Dwitiya) is a traditional Hindu festival of the pure love between brothers and sisters, with blessings and wishes for a long life. It is celebrated the day right after Kali Puja, on the Dwitiya tithi of the bright fortnight of Kartik.',
+  tithi:'Dwitiya Tithi',ts:'Tithi begins',te:'Tithi ends',d1:'10 Nov',d2:'11 Nov',sT:'2:02 PM',eT:'3:54 PM',
+  src:'Source: Bishuddha Siddhanta Panjika',
+  secT:'Tithi & time',secP:'The Phota thala',secN:'How the Phota is given',
+  plate:['Pure chandan (sandal paste)','Curd or Gangajal','Rice grains (dhan)','Durva grass','Lamp (pradip)','Incense sticks','Conch (shankh)','5 or 7 kinds of sweets'],
+  steps:['The sister puts a Phota of sandal paste on her brother’s forehead with her ring (or little) finger.','While applying it, she recites this rhyme:','Then she blesses him by placing rice grains and durva on his head.','Finally, the brother is offered sweets and gifts are exchanged.'],
+  m:['ভাইয়ের কপালে দিলাম ফোঁটা,','যমের দুয়ারে পড়ল কাঁটা।','যমুনা দেয় যমকে ফোঁটা,','আমি দিই আমার ভাইকে ফোঁটা॥','যমুনার হাতে ফোঁটা খেয়ে যম হল অমর,','আমার হাতে ফোঁটা খেয়ে আমার ভাই হোক অমর॥'],
+  lbl:'Bhai Phota tithi and time',go:'See the Bhai Phota details below'}
+};
+var ARROW_DN='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>';
+function bpTimes(L){return '<div class="kp-times"><div class="kp-t"><small>'+L.ts+'</small><b>'+L.sT+'</b><em>'+L.d1+'</em></div><div class="kp-t"><small>'+L.te+'</small><b>'+L.eT+'</b><em>'+L.d2+'</em></div></div>'}
+function bpPanel(up){
+ var L=BP[st.lang];
+ if(up)return '<div class="rk-panel bp-panel up"'+(st.bpu?'':' hidden')+'><h3>'+L.tithi+'</h3>'+bpTimes(L)+'<div class="rk-note">'+L.src+'</div><button type="button" class="bp-go" data-bpgo="1" aria-label="'+L.go+'">'+ARROW_DN+'</button></div>';
+ return '<div class="rk-panel bp-panel"'+(st.bp?'':' hidden')+'><p class="bp-intro">'+L.intro+'</p><div class="bp-sec">'+L.secT+'</div>'+bpTimes(L)+'<div class="rk-note" style="text-align:center">'+L.src+'</div><div class="bp-sec">'+L.secP+'</div><div class="bp-chips">'+L.plate.map(function(x){return '<span>'+x+'</span>'}).join('')+'</div><div class="bp-sec">'+L.secN+'</div><div class="bp-steps">'+L.steps.map(function(s,i){return '<div class="bp-st"><i>'+n(i+1)+'</i><div>'+s+(i===1?'<div class="bp-m">'+L.m.join('<br>')+'</div>':'')+'</div></div>'}).join('')+'</div></div>'}
+function bpIcon(up){var on=up?st.bpu:st.bp;return '<button type="button" class="rk-ic bp-ic'+(on?' open':'')+(up&&!st.bpseen?' shake':'')+'" '+(up?'data-bpu="1"':'data-bp="1"')+' aria-expanded="'+(!!on)+'" aria-label="'+BP[st.lang].lbl+'">'+RK_ICON+'</button>'}
+function syncBp(){
+ [].forEach.call(document.querySelectorAll('#tl li.bp'),function(x){x.classList.toggle('open',!!st.bp)});
+ [].forEach.call(document.querySelectorAll('#tl .bp-panel'),function(x){x.hidden=!st.bp});
+ [].forEach.call(document.querySelectorAll('#tl [data-bp]'),function(x){x.setAttribute('aria-expanded',!!st.bp);x.classList.toggle('open',!!st.bp)});
+ [].forEach.call(document.querySelectorAll('#upnext .bp-panel'),function(x){x.hidden=!st.bpu});
+ [].forEach.call(document.querySelectorAll('[data-bpu]'),function(x){x.setAttribute('aria-expanded',!!st.bpu);x.classList.toggle('open',!!st.bpu)})}
 var RK_ICON='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M10 12h6M10 16h6"/></svg>';
 function rkPanel(){
  var L=RK[st.lang],t=T(),now=new Date(),td=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
@@ -965,12 +1022,12 @@ function renderCal(){
  var nd=items.filter(function(i){return i.s.k==='done'}).length,nl=items.length-nd;
  var next=null;items.forEach(function(i){if(!next&&i.s.k!=='done')next=i});
  $('calTitle').textContent=t.calTitle;
- $('upnext').innerHTML='<div class="upnext"><div class="un-k">'+t.upLabel+'</div>'+(next?'<div class="un-stage">'+festIcon(next.c.k)+SP+'</div><div class="un-name">'+nameLink(next.c,esc(nameOf(next.c)),'un-go')+'</div><div class="un-date">'+upDate(next.c)+'</div><div class="un-pill">'+(next.s.k==='left'?t.upIn(next.s.d):statusText(next.s))+'</div>':'<div class="un-name">'+t.yearEnd+'</div>')+'</div>';
+ $('upnext').innerHTML='<div class="upnext"><div class="un-k">'+t.upLabel+'</div>'+(next?'<div class="un-stage">'+festIcon(next.c.k)+SP+'</div><div class="un-name'+(next.c.k==='bhai'?' bpn':'')+'">'+nameLink(next.c,esc(nameOf(next.c)),'un-go')+(next.c.k==='bhai'?bpIcon(true):'')+'</div><div class="un-date">'+upDate(next.c)+'</div><div class="un-pill">'+(next.s.k==='left'?t.upIn(next.s.d):statusText(next.s))+'</div>'+(next.c.k==='bhai'?bpPanel(true):''):'<div class="un-name">'+t.yearEnd+'</div>')+'</div>';
  var out='';
  items.forEach(function(i){
   var k=i.s.k,cls=k==='left'?(i===next?'next':'left'):k;
-  var rk=i.c.k==='rash',kp=i.c.k==='kali';
-  out+='<li class="'+cls+(rk?' rk'+(st.rk?' open':''):'')+(kp?' kp'+(st.kp?' open':''):'')+'"><span class="dot">'+(k==='done'?TICK_SVG:'')+'</span><span class="fw">'+festIcon(i.c.k)+'</span><div class="tb"><div class="tl-name">'+esc(nameOf(i.c))+(rk?'<button type="button" class="rk-ic" aria-expanded="'+(!!st.rk)+'" aria-controls="rkPanel" aria-label="'+RK[st.lang].lbl+'">'+RK_ICON+'</button>':'')+(kp?'<button type="button" class="rk-ic" aria-expanded="'+(!!st.kp)+'" aria-controls="kpPanel" aria-label="'+KP[st.lang].lbl+'">'+RK_ICON+'</button>':'')+'</div><div class="tl-date">'+fmtRange(i.c.s,i.c.e)+'</div></div><span class="status">'+statusText(i.s)+'</span>'+(rk?rkPanel():'')+(kp?kpPanel():'')+'</li>'});
+  var rk=i.c.k==='rash',kp=i.c.k==='kali',bp=i.c.k==='bhai';
+  out+='<li class="'+cls+(rk?' rk'+(st.rk?' open':''):'')+(kp?' kp'+(st.kp?' open':''):'')+(bp?' bp'+(st.bp?' open':''):'')+'"><span class="dot">'+(k==='done'?TICK_SVG:'')+'</span><span class="fw">'+festIcon(i.c.k)+'</span><div class="tb"><div class="tl-name'+((bp||rk||kp)?' bpn':'')+'">'+esc(nameOf(i.c))+(rk?'<button type="button" class="rk-ic" aria-expanded="'+(!!st.rk)+'" aria-controls="rkPanel" aria-label="'+RK[st.lang].lbl+'">'+RK_ICON+'</button>':'')+(kp?'<button type="button" class="rk-ic" aria-expanded="'+(!!st.kp)+'" aria-controls="kpPanel" aria-label="'+KP[st.lang].lbl+'">'+RK_ICON+'</button>':'')+(bp?bpIcon(false):'')+'</div><div class="tl-date">'+fmtRange(i.c.s,i.c.e)+'</div></div><span class="status">'+statusText(i.s)+'</span>'+(rk?rkPanel():'')+(kp?kpPanel():'')+(bp?bpPanel(false):'')+'</li>'});
  $('tl').innerHTML=out;
  }
 
@@ -1013,7 +1070,7 @@ function copyText(text,btn){
 
 /* ---------- events ---------- */
 $('lang').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;st.lang=b.dataset.l;try{localStorage.setItem('pkd_lang',st.lang)}catch(x){}renderAll()});
-$('calArea').addEventListener('click',function(e){var r0=e.target.closest('li.kp');if(r0&&!e.target.closest('.rk-panel')){st.kp=!st.kp;r0.classList.toggle('open',st.kp);var p0=$('kpPanel');if(p0)p0.hidden=!st.kp;var i0=r0.querySelector('.rk-ic');if(i0)i0.setAttribute('aria-expanded',st.kp);return}var r=e.target.closest('li.rk');if(r&&!e.target.closest('.rk-panel')){st.rk=!st.rk;r.classList.toggle('open',st.rk);var p=$('rkPanel');if(p)p.hidden=!st.rk;var ib=r.querySelector('.rk-ic');if(ib)ib.setAttribute('aria-expanded',st.rk);return}var b=e.target.closest('button[data-go]');if(!b)return;st.fest=b.dataset.go;st.sel=null;st.selArea=null;st.area=null;st.kind='all';st.q='';$('search').value='';renderAll();window.scrollTo(0,0)});
+$('calArea').addEventListener('click',function(e){var gb=e.target.closest('[data-bpgo]');if(gb){st.bp=true;syncBp();var tli=document.querySelector('#tl li.bp');if(tli&&tli.scrollIntoView)tli.scrollIntoView({behavior:'smooth',block:'start'});return}var ub=e.target.closest('[data-bpu]');if(ub){st.bpu=!st.bpu;st.bpseen=true;[].forEach.call(document.querySelectorAll('.bp-ic.shake'),function(x){x.classList.remove('shake')});syncBp();return}var rb=e.target.closest('#tl li.bp');if(rb&&!e.target.closest('.rk-panel')){st.bp=!st.bp;syncBp();return}var r0=e.target.closest('li.kp');if(r0&&!e.target.closest('.rk-panel')){st.kp=!st.kp;r0.classList.toggle('open',st.kp);var p0=$('kpPanel');if(p0)p0.hidden=!st.kp;var i0=r0.querySelector('.rk-ic');if(i0)i0.setAttribute('aria-expanded',st.kp);return}var r=e.target.closest('li.rk');if(r&&!e.target.closest('.rk-panel')){st.rk=!st.rk;r.classList.toggle('open',st.rk);var p=$('rkPanel');if(p)p.hidden=!st.rk;var ib=r.querySelector('.rk-ic');if(ib)ib.setAttribute('aria-expanded',st.rk);return}var b=e.target.closest('button[data-go]');if(!b)return;st.fest=b.dataset.go;st.sel=null;st.selArea=null;st.area=null;st.kind='all';st.q='';$('search').value='';renderAll();window.scrollTo(0,0)});
 $('tabs').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;st.fest=b.dataset.f;st.sel=null;st.selArea=null;st.area=null;st.kind='all';st.q='';$('search').value='';renderAll()});
 $('kinds').addEventListener('click',function(e){var b=e.target.closest('button[data-k]');if(!b)return;st.kind=b.dataset.k;st.sel=null;renderKinds();renderList();renderMap()});
 $('search').addEventListener('input',function(e){st.q=e.target.value;renderList();renderMap()});
