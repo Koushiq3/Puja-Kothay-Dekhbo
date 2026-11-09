@@ -3,7 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>পূজা কোথায় দেখব</title>
+<title>পূজা কোথায় দেখব | Puja Kothay Dekhbo</title>
+<meta name="description" content="ঢাকার কালী পূজা ও দুর্গাপূজার মন্দির ও মণ্ডপের তালিকা। এলাকার নাম দিয়ে খুঁজুন, ম্যাপে অবস্থান দেখুন, Google Maps-এ দিকনির্দেশনা পান। Find Kali Puja and Durga Puja temples and mandaps across Dhaka. Search by area, see locations on the map and get directions.">
+<link rel="canonical" href="https://koushiq3.github.io/Puja-Kothay-Dekhbo/">
+<meta name="theme-color" content="#0D0E1E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Puja Kothay Dekhbo">
+<meta property="og:locale" content="bn_BD">
+<meta property="og:title" content="পূজা কোথায় দেখব | ঢাকার পূজা, আপনার কাছেই">
+<meta property="og:description" content="ঢাকার কালী পূজা ও দুর্গাপূজার মন্দির ও মণ্ডপের তালিকা। এলাকার নাম দিয়ে খুঁজুন, ম্যাপে অবস্থান দেখুন, Google Maps-এ দিকনির্দেশনা পান।">
+<meta property="og:url" content="https://koushiq3.github.io/Puja-Kothay-Dekhbo/">
+<meta property="og:image" content="https://koushiq3.github.io/Puja-Kothay-Dekhbo/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="পূজা কোথায় দেখব: ঢাকার পূজা, আপনার কাছেই">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="পূজা কোথায় দেখব | Puja Kothay Dekhbo">
+<meta name="twitter:description" content="ঢাকার কালী পূজা ও দুর্গাপূজার মন্দির ও মণ্ডপের তালিকা। এলাকার নাম দিয়ে খুঁজুন, ম্যাপে অবস্থান দেখুন, Google Maps-এ দিকনির্দেশনা পান।">
+<meta name="twitter:image" content="https://koushiq3.github.io/Puja-Kothay-Dekhbo/og-image.png">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@600&family=Tiro+Bangla&family=Noto+Sans+Bengali:wght@500;600;700&display=swap">
 <style>
@@ -826,18 +843,24 @@ function renderList(){
    out+='</li>'});
   ul.innerHTML=out;return}
  if(st.fest==='kali'&&!SHOW_MANDAP){renderKali();return}
+ if(st.fest==='durga'&&st.area){renderKali();return}
  areaMode(false);
  var arr=visible();
  $('cnt').textContent=t.count(n(arr.length))+(st.user&&arr.length?' · '+t.near:'');
  if(!arr.length){
   ul.innerHTML=(st.fest==='kali'&&st.kind==='mandap'&&!st.q.trim())?'<li class="empty">'+emptyMandap('')+'</li>':'<li class="empty">'+t.none+'</li>';return}
  if(st.sel&&!arr.some(function(p){return p.id===st.sel}))st.sel=null;
- arr.forEach(function(p){out+=cardHTML(p,false)});
- if(st.fest==='durga')out+=addCard();
+ var cntA={},doneA={},rows=0;
+ if(st.fest==='durga')arr.forEach(function(p){cntA[p.a]=(cntA[p.a]||0)+1});
+ arr.forEach(function(p){
+  if(st.fest==='durga'&&cntA[p.a]>1){if(doneA[p.a])return;doneA[p.a]=1;rows++;
+   out+='<li><button type="button" class="card" data-open="'+p.a+'"><span><span class="c-name">'+esc(nameOf(AREA[p.a]))+'</span></span><span class="c-dist"><span class="gnum">'+n(cntA[p.a])+'</span></span></button></li>'}
+  else{rows++;out+=cardHTML(p,false)}});
+ if(st.fest==='durga'){$('cnt').textContent=t.count(n(rows))+(st.user&&arr.length?' · '+t.near:'');out+=addCard()}
  ul.innerHTML=out}
 
 function backToRow(){var k=st.backKey;st.backKey=null;if(!k)return;var el=document.querySelector('[data-open="'+k+'"]');if(el&&el.scrollIntoView)el.scrollIntoView({block:'center'})}
-function areaItems(k){return all().filter(function(p){return p.f==='kali'&&p.a===k})}
+function areaItems(k){var f=st.fest==='durga'?'durga':'kali';return all().filter(function(p){return p.f===f&&p.a===k})}
 function areaMode(on){$('tabs').style.display=on?'none':'';$('count').hidden=on||st.fest==='cal';[].forEach.call(document.querySelectorAll('.controls,.bar,.mapcol,#kinds'),function(x){x.style.display=on?'none':''})}
 function renderKali(){
  var t=T(),ul=$('list'),q=st.q.trim().toLowerCase(),out='';
@@ -1040,7 +1063,7 @@ function parseCSV(txt){
   else cur+=c}
  if(cur!==''||row.length){row.push(cur);rows.push(row)}
  return rows}
-function normTxt(x){return String(x||'').toLowerCase().replace(/[\s\u0981\u09BC.,\-\/]+/g,'').replace(/\u09C0/g,'\u09BF').replace(/\u09C2/g,'\u09C1').replace(/\u09B6|\u09B7/g,'\u09B8').replace(/bazaar|bajar|bajaar/g,'bazar').replace(/tanti|tanthi|tonti/g,'tanti').replace(/shakhari|sankhari|shankhari|sakhari/g,'shakhari')}
+function normTxt(x){return String(x||'').toLowerCase().replace(/[\s\u0981\u09BC.,\-\/]+/g,'').replace(/\u09C0/g,'\u09BF').replace(/\u09C2/g,'\u09C1').replace(/\u09B6|\u09B7/g,'\u09B8').replace(/bazaar|bajar|bajaar/g,'bazar').replace(/tanti|tanthi|tonti/g,'tanti').replace(/shakhari|sankhari|shankhari|sakhari/g,'shakhari').replace(/([a-z])\1+/g,'$1').replace(/([a-z])h/g,'$1')}
 function areaKeyFor(text,idx,textEn){
  var v=normTxt(text+' '+(textEn||'')),best=null,bl=0;
  Object.keys(AREA).forEach(function(k){var a=AREA[k];[a.bn,a.en].forEach(function(nm){var m=normTxt(nm);if(m.length>=3&&v.indexOf(m)>-1&&m.length>bl){best=k;bl=m.length}})});
