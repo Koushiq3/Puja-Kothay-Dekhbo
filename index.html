@@ -189,6 +189,9 @@ button{cursor:pointer}
 .sub-h::after{content:"";flex:1;border-top:1px dashed var(--line)}
 .ahead{display:flex;flex-direction:column;gap:6px;margin-bottom:4px}
 .ahead h3{margin:0;font-family:var(--font-display);font-weight:400;font-size:1.5rem}
+.ahrow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ahmap{display:inline-flex;align-items:center;gap:6px;flex:none;min-height:40px;padding:6px 14px;border-radius:999px;border:1px solid var(--accent);background:var(--surface2);color:var(--accent);text-decoration:none;font-weight:600;font-size:.9rem;white-space:nowrap}
+.ahmap svg{width:18px;height:18px;flex:none}
 .back{align-self:flex-start;display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;border:1px solid color-mix(in srgb,var(--accent) 40%,transparent);border-radius:50%;background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--accent);font-weight:700;font-size:1.05rem;line-height:1}
 .emptybox{border:1px dashed var(--line);border-radius:10px;padding:12px;color:var(--muted);font-size:.9rem;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
 .empty{border:1px dashed var(--line);border-radius:12px;padding:24px;text-align:center;color:var(--muted);display:flex;flex-direction:column;gap:10px;align-items:center}
@@ -527,7 +530,7 @@ var AREAS=[
  {k:'jagannath',bn:'ঢাবি ক্যাম্পাস',en:'DU Campus',lat:23.7291,lng:90.3942,v:1},
  {k:'dhakeshwari',bn:'ঢাকেশ্বরী',en:'Dhakeshwari',lat:23.7226,lng:90.3900,v:1},
  {k:'lalbagh',bn:'লালবাগ',en:'Lalbagh',lat:23.7189,lng:90.3873},
- {k:'shakhari',bn:'শাঁখারি বাজার',en:'Shakhari Bazar',lat:23.7084,lng:90.4060},
+ {k:'shakhari',bn:'শাঁখারি বাজার',en:'Shakhari Bazar',lat:23.7084,lng:90.4060,eLat:23.710013,eLng:90.410672},
  {k:'tanti',bn:'তাঁতি বাজার',en:'Tanti Bazar',lat:23.7112,lng:90.4035},
  {k:'banglabazar',bn:'বাংলাবাজার',en:'Bangla Bazar',lat:23.7125,lng:90.4075},
  {k:'purandhaka',bn:'পুরান ঢাকা',en:'Old Dhaka',lat:23.7098,lng:90.4090},
@@ -638,7 +641,7 @@ var S={
   demo:'ডেমো ডাটা। মন্দিরের নাম ও ঠিকানা প্রকাশিত সূত্র থেকে নেওয়া, শুধু ঢাকেশ্বরী, রামকৃষ্ণ মিশন ও জগন্নাথ হলের কোঅর্ডিনেট উইকিপিডিয়া থেকে। বাকি অবস্থান আনুমানিক। কালী পূজার মণ্ডপের নাম এখনো কেউ যোগ করেননি।',
   kAll:'এলাকা অনুযায়ী',kTemple:'মন্দির',kMandap:'মণ্ডপ',
   kHint:'এলাকার নামে ক্লিক করলে সেখানকার সব মন্দির ও মণ্ডপের বিবরণ আসবে। পাশের সংখ্যা মোট পূজার সংখ্যা।',
-  back:'ফিরে যান',localNote:'আপনার ফোনে সংরক্ষিত। সবার জন্য এখনও দেখা যাবে না।',nTemple:'মন্দির',nMandap:'মণ্ডপ',secTemple:'মন্দির',secMandap:'মণ্ডপ',
+  back:'ফিরে যান',entry:'প্রবেশপথ',entryLbl:'ম্যাপে এলাকার প্রবেশপথ দেখুন',localNote:'আপনার ফোনে সংরক্ষিত। সবার জন্য এখনও দেখা যাবে না।',nTemple:'মন্দির',nMandap:'মণ্ডপ',secTemple:'মন্দির',secMandap:'মণ্ডপ',
   emptyArea:'এই এলাকার মণ্ডপের নাম এখনো যোগ হয়নি। আপনি জানলে যোগ করুন।',
   emptyMandap:'এখনো কোনো মণ্ডপ যোগ হয়নি। আপনার পাড়া বা সংঘের পূজার নাম প্রথমে যোগ করুন।',
   calTitle:'২০২৬ সালের উৎসবমালা',fAll:'সব',fDone:'সম্পন্ন',fLeft:'বাকি আছে',
@@ -667,7 +670,7 @@ var S={
   demo:'Demo data. Temple names and addresses come from published sources. Only Dhakeshwari, Ramakrishna Mission and Jagannath Hall use Wikipedia coordinates. All other positions are approximate. Nobody has added Kali Puja mandap names yet.',
   kAll:'By area',kTemple:'Temples',kMandap:'Mandaps',
   kHint:'Tap an area to see every temple and mandap there. The number beside it is the total count of pujas.',
-  back:'Back',localNote:'Saved on your phone only. Not yet visible to others.',nTemple:'temples',nMandap:'mandaps',secTemple:'Temples',secMandap:'Mandaps',
+  back:'Back',entry:'Entry point',entryLbl:'View the area entry point on the map',localNote:'Saved on your phone only. Not yet visible to others.',nTemple:'temples',nMandap:'mandaps',secTemple:'Temples',secMandap:'Mandaps',
   emptyArea:'No mandap names have been added for this area yet. Add one if you know it.',
   emptyMandap:'No mandaps added yet. Be the first to add your neighbourhood or club puja.',
   calTitle:'Festivals of 2026',fAll:'All',fDone:'Completed',fLeft:'Upcoming',
@@ -885,13 +888,18 @@ function renderList(){
 function backToRow(){var k=st.backKey;st.backKey=null;if(!k)return;var el=document.querySelector('[data-open="'+k+'"]');if(el&&el.scrollIntoView)el.scrollIntoView({block:'center'})}
 function areaItems(k){var f=st.fest==='durga'?'durga':'kali';return all().filter(function(p){return p.f===f&&p.a===k})}
 function areaMode(on){$('tabs').style.display=on?'none':'';$('count').hidden=on||st.fest==='cal';[].forEach.call(document.querySelectorAll('.controls,.bar,.mapcol,#kinds'),function(x){x.style.display=on?'none':''})}
+var PIN_SVG='<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+function areaHead(a,t){
+ var h='<h3>'+esc(nameOf(a))+'</h3>';
+ if(!(a.eLat&&a.eLng))return h;
+ return '<div class="ahrow">'+h+'<a class="ahmap" href="https://www.google.com/maps/search/?api=1&query='+a.eLat+','+a.eLng+'" target="_blank" rel="noopener" aria-label="'+t.entryLbl+'">'+PIN_SVG+t.entry+'</a></div>'}
 function renderKali(){
  var t=T(),ul=$('list'),q=st.q.trim().toLowerCase(),out='';
  areaMode(!!st.area);
  if(st.area){
   var a=AREA[st.area],items=areaItems(st.area).filter(function(p){return !q||matches(p,q)}),mine=items.some(function(p){return p.pending});
   $('cnt').textContent=t.count(n(items.length));
-  out+='<li class="ahead"><button type="button" class="back" data-back="1" aria-label="'+t.back+'">←</button><h3>'+esc(nameOf(a))+'</h3></li>';
+  out+='<li class="ahead"><button type="button" class="back" data-back="1" aria-label="'+t.back+'">←</button>'+areaHead(a,t)+'</li>';
   if(!items.length)out+='<li>'+emptyMandap(st.area)+'</li>';
   else{items.forEach(function(p){out+=cardHTML(p,true)});out+='<li>'+addBtn(st.area,t.addTitleM,t.addSubM)+(mine?'<div class="hint">'+t.localNote+'</div>':'')+'</li>'}
   ul.innerHTML=out;return}
